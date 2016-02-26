@@ -1,0 +1,30 @@
+{
+    "name": "msg-js-spa-widgets",
+    "homepage": "https://github.com/msg-systems/msg-js-spa-widgets",
+    "description": "Single Page Application Widgets",
+    "version": "0.1.0",
+    "author": {
+        "name": "msg systems ag",
+        "url": "https://github.com/msg-systems"
+    },
+    "keywords": [
+        "single",
+        "page",
+        "application",
+        "app",
+        "widgets"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/msg-systems/msg-js-spa-widgets"
+    },
+    "bugs": {
+        "url": "https://github.com/msg-systems/msg-js-spa-widgets/issues"
+    },
+    "dependencies": {
+        "select2": "4.0.2-rc.1"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    }
+}

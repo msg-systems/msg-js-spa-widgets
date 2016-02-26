@@ -1,0 +1,21 @@
+register:
+  widget.slickGrid:
+    JS:
+    - ../lib/slickgrid/slick.core.js
+    - ../lib/slickgrid/slick.grid.js
+    - ../lib/slickgrid/plugins/slick.rowselectionmodel.js
+    - ../lib/slickgrid/plugins/slick.rowmovemanager.js
+    - ../lib/slickgrid/plugins/slick.checkboxselectcolumn.js
+    - ../lib/slickgrid/plugins/slick.autotooltips.js
+    - ../lib/slickgrid/slick.dataview.js
+    CSS:
+    - name: ../lib/slickgrid/slick.grid.css
+      ASSETS:
+      - ../lib/slickgrid/images/sort-asc.gif
+      - ../lib/slickgrid/images/sort-desc.gif
+    - name: ../lib/slickgrid/slick-default-theme.css
+      ASSETS:
+      - ../lib/slickgrid/images/collapse.gif
+      - ../lib/slickgrid/images/expand.gif
+      - ../lib/slickgrid/images/header-columns-bg.gif
+      - ../lib/slickgrid/images/header-columns-over-bg.gif

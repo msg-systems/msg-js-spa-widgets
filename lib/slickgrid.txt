@@ -1,0 +1,6 @@
+URL:        https://github.com/msg-systems/slickgrid/releases/tag/2.2.2
+Version:    2.2.2
+Author:     Michael Leibman
+            msg systems ag
+License:    MIT License
+            https://github.com/msg-systems/slickgrid/blob/master/MIT-LICENSE.txt

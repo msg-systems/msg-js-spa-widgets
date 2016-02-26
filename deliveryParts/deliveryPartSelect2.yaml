@@ -1,0 +1,7 @@
+register:
+  widget.select2:
+    JS:
+    - ../node_modules/select2/dist/js/select2.js
+    - ../node_modules/select2/dist/js/i18n/de.js
+    CSS:
+    - ../node_modules/select2/dist/css/select2.css
