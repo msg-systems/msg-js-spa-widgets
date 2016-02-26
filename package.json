@@ -22,7 +22,8 @@
         "url": "https://github.com/msg-systems/msg-js-spa-widgets/issues"
     },
     "dependencies": {
-        "select2": "4.0.2-rc.1"
+        "select2":  "4.0.2-rc.1",
+        "vis":      "4.15.0"
     },
     "engines": {
         "node": ">=0.10.0"

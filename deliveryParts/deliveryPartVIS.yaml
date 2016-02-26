@@ -1,0 +1,22 @@
+register:
+  widget.vis:
+    JS:
+    - ../node_modules/vis/dist/vis.js
+    CSS:
+    - name: ../node_modules/vis/dist/vis.css
+      ASSETS:
+      - ../node_modules/vis/dist/img/timeline/delete.png
+      - ../node_modules/vis/dist/img/network/cross.png
+      - ../node_modules/vis/dist/img/network/backIcon.png
+      - ../node_modules/vis/dist/img/network/addNodeIcon.png
+      - ../node_modules/vis/dist/img/network/editIcon.png
+      - ../node_modules/vis/dist/img/network/connectIcon.png
+      - ../node_modules/vis/dist/img/network/cross.png
+      - ../node_modules/vis/dist/img/network/deleteIcon.png
+      - ../node_modules/vis/dist/img/network/upArrow.png
+      - ../node_modules/vis/dist/img/network/downArrow.png
+      - ../node_modules/vis/dist/img/network/leftArrow.png
+      - ../node_modules/vis/dist/img/network/rightArrow.png
+      - ../node_modules/vis/dist/img/network/plus.png
+      - ../node_modules/vis/dist/img/network/minus.png
+      - ../node_modules/vis/dist/img/network/zoomExtends.png
