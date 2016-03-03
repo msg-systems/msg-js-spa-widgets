@@ -1,13 +1,15 @@
 register:
-  widget.slickGrid:
+  spa.widget.slickGrid:
     JS:
     - ../lib/slickgrid/slick.core.js
     - ../lib/slickgrid/slick.grid.js
+    - ../lib/slickgrid/slick.groupitemmetadataprovider.js
     - ../lib/slickgrid/plugins/slick.rowselectionmodel.js
     - ../lib/slickgrid/plugins/slick.rowmovemanager.js
     - ../lib/slickgrid/plugins/slick.checkboxselectcolumn.js
     - ../lib/slickgrid/plugins/slick.autotooltips.js
     - ../lib/slickgrid/slick.dataview.js
+    - ../src/app/ui/_trait/dataView/dataView-ctrl.js
     CSS:
     - name: ../lib/slickgrid/slick.grid.css
       ASSETS:

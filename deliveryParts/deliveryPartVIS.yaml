@@ -1,5 +1,5 @@
 register:
-  widget.vis:
+  spa.widget.vis:
     JS:
     - ../node_modules/vis/dist/vis.js
     CSS:
