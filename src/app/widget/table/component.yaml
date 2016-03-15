@@ -1,0 +1,283 @@
+package: "app.widget.table"
+id: "widget-table"
+desc: "Diese Komponenten kapselt den Umgang mit der Slickgrid Tabelle.
+       Daten, Spalten und Interaktionen mit der Tabelle können mittels der Komponente beeinflußt werden.
+       Damit soll eine Einheitliche Verwendung aller Tabellen gewährleistet werden und eine manuelle Einbinung
+       von Slickgrid wird, außer in dieser Komponente, nicht mehr notwendig"
+interface:
+  api:
+    register:
+      setTableHeader:
+        desc: "Erlaubt das initiale Setzen der Tabellenspalten"
+        param: "Ein Array von slickgrid columns.
+                Eine column muss dabei dem Format beschrieben im table-model.js -> dynamics -> singleColumnFormat folgen"
+      setTableOptions:
+        desc: "Erlaubt das initiale Setzen der Tabellenoptionen"
+        param: "Ein Object das dem beschriebenen Format im table-model.js -> dynamics -> optionsFormat folgt"
+      setDataView:
+        desc: "Erlaubt das Setzen der DataView"
+        param: "Ein SlickGrid DataView Objekt"
+      renderGrid:
+        desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuzeichnen"
+      resizeGrid:
+        desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuberechnen der Höhe, Breite und Spaltenbreiten"
+      changeRowCount:
+        desc: "Schickt der Slickgrid Tabelle die Anforderung den RowCount anzupassen und sich neu zu rendern"
+      changedRows:
+        desc: "Schickt der Slickgrid Tabelle die Anforderung sich zu invalidieren, neu zu rendern und die Selektion zu synchronisieren."
+        param: "object"
+      scrollToIndex:
+        desc: "Falls index 0 ist soll ganz nach oben gescrollte werden, ansonsten soll die Reihe in den Sichtbereich gescrollt werden."
+        param: "number - Index der Reihe"
+      setOnBeforeEditCellCallback:
+        desc: "Erlaubt das Eingreifen in den Editiermechanismus. Eine Editierung kann damit verhindert werden.
+               Es muss dabei eine Callback-Function übergeben werden."
+        param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
+                Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events"
+      setOnBeforeMoveRowsCallback:
+        desc: "Erlaubt das Eingreifen in den Zeilenverschiebemechanismus des RowMoveManagers von Slickgrid.
+               Es muss dabei eine Callback-Function übergeben werden."
+        param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
+                Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events
+                Achtung: onBeforeMoveRows ist ein Event auf dem Slickgrid Plugin 'RowMoveManager' und nicht auf Slickgrid"
+      setSelectedItems:
+        desc: "Schickt der Slickgrid Tabelle die Anforderung die gegebenen Items als selektiert zu markieren"
+        param: "Objekt oder Array von Tabellen Items"
+  events:
+    publish:
+      toParent:
+        "table:toggleTreeCollapse":
+          desc: "Wird ein Datenobjekt zusammen- oder aufgeklappt, wird dieser Event getriggert"
+          param: "Objekt mit den Attributen
+                  'dataObject'       gefüllt mit dem Datensatz der auf- oder zugeklappt werden soll
+                  'columnId'         Spaltenid, auf welcher der Toggle angestoßen wurde"
+        "table:cellClicked":
+          desc: "Der Klick in eine Tabellenzelle wird mit diesem Event propagiert"
+          param: "Objekt mit den Attributen
+                  'dataObject'       gefüllt mit dem Datensatz der auf- oder zugeklappt werden soll
+                  'columnId'         Spaltenid, auf welcher der Toggle angestoßen wurde"
+        "table:rowsMoved":
+          desc: "Sofern die Slickgrid Tabelle den RowMoveManager aktiviert, werden move events propagiert"
+          param: "Objekt mit den Attributen
+                  'items'            gefüllt mit den Datensätzen die verschoben werden sollen
+                  'insertBeforeItem' Der Datensatz vor welchem die items eingeschoben werden
+                  'insertAfterItem'  Der Datensatz nach welchem die items eingeschoben werden. Kann null sein."
+        "table:activeCellChanged":
+          desc: "Propagiert den Slickgrid event onActiveCellChanged"
+          param: "Objekt mit den Attributen
+                  'dataObject'       Datensatz, der aktuell den Fokus bekommt
+                  'columnId'         SpaltenId, welche den aktuellen Fokus bekommt
+                  'row'              Die neue aktive Zeile anhand ihrer zero-based Id
+                  'cell'             Die neue aktive Spalte anhand ihrer zero-based id"
+        "table:selectedDataItemsChanged":
+          desc: "Liefert bei Veränderung der Selektion, die neu selektierten Datensätze"
+          param: "Array mit allen selektierten Datensätzen"
+        "table:dataChanged":
+          desc: "Meldet die inhaltliche Veränderung einer Tabellenzelle durch den Nutzer"
+          param: "row                Die Zeilennummer, in welcher verändert wurde
+                  cell               Die Spaltennummer, in welcher verändert wurde"
+        "table:sortData":
+          desc: "Meldet des Sort-Objekt"
+          param: "Objekt mit den Attributen
+                  'col': Die Spalte, anhand der sortiert werden soll
+                  'asc': 1 oder -1 - die Richtung in die sortiert werden soll"
+        "table:startDragging":
+          desc: "Meldet den Datensatz, der bei Drag&Drop verschoben werden soll."
+          param: "Objekt mit den Attributen
+                  'data'             Der Datensatz der verschoben werden soll
+                  restliche Slickgrid Event-Attributes werden zusätzlich durchgereicht"
+        "table:onMouseEnter":
+          desc: "Propagiert den Slickgrid event onMouseEnter bei einer Zelle"
+          param: "Objekt mit den Attributen
+                  'data'             Datensatz, der aktuell unter dem Mauszeiger liegt
+                  'columnId'         SpaltenId, welche unter dem Mauszeiger liegt
+                  'target'           TODO: Klären! DOM Element welches als target für den MouseMove dient"
+        "table:onMouseLeave":
+          desc: "Propagiert den Slickgrid event onMouseEnter bei einer Zelle"
+        "table:drop":
+          desc: "Propagiert den Slickgrid event onDrop"
+          param: "Objekt mit den Attributen
+                  'dataObject'       Datensatz, auf welchen gedroppt wird
+                  'columnId'         SpaltenId, auf welchen gedroppt wird
+                  'droppedData'      Die Daten, welche gedroppt werden
+                  'dropType'         Die Art der Daten, welche gedroppt werden"
+        "table:dropstart":
+          desc: "Propagiert den Slickgrid event onDropStart"
+          param: "Objekt mit den Attributen
+                  'dataObject'       Datensatz, auf welchen gedroppt wird
+                  'columnId'         SpaltenId, auf welchen gedroppt wird
+                  'domEv'            TODO: Klären! Das DOM Event des onDropStart
+                  'dropType'         Die Art der Daten, welche gedroppt werden"
+        "table:dropend":
+          desc: "Propagiert den Slickgrid event onDropEnd"
+  model:
+    define:
+      own:
+        data:
+          dataView:
+            desc: "Hält ein SlickGrid DataView Objekt"
+            param: "Objekt"
+          columns:
+            desc: "Menge der Slickgrid Spaltendefinitionen"
+            param: "Array von Objekten mit der Signatur - siehe table-model.js -> dynamics -> singleColumnFormat"
+          options:
+            desc: "Menge der Slickgrid Tabellen Optionen"
+            param: "Objekt mit der Signatur - siehe table-model.js -> dynamics -> optionsFormat"
+          selectedCell:
+            desc: "Die aktuell selektierte Zelle der Tabelle"
+            param: "Objekt"
+          treeColumnWidth:
+            desc: "Beinhaltet die Breite der Treetable Collapse/Expand Spalte. Diese wird dynamisch verbreitert."
+            param: "number für die Breite in Pixeln"
+        event:
+          selectedRowsChanged:
+            desc: "Trigger wenn Tabellenselektionen verändert werden"
+            param: "Array mit den selektierten Datensätzen"
+          cellClicked:
+            desc: "Trigger wenn eine Tabellenzelle geklickt wird"
+            param: "Objekt mit den Attributen 'cell' und 'cellId'"
+          dataChanged:
+            desc: "Trigger wenn eine Tabellenzelle verändert wurde"
+            param: "Objekt mit den Attributen:
+                    'row'      Zeilennummer der veränderten Zelle
+                    'cell'     Spaltennummer der veränderten Zelle"
+          sortColumns:
+            desc: "Trigger wenn die Daten neu sortiert wurden"
+            param: "Daten des Slickgrid Tabelle onSort Callbacks werden durchgereicht"
+          dragStarted:
+            desc: "Trigger wenn Drag&Drop gestartet wurde"
+            param: "Daten des Slickgrid Tabelle onDragStart Callbacks werden durchgereicht und um 'row' ergänzt"
+          onDrop:
+            desc: "Trigger wenn Drag&Drop auf einer Zelle durchzuführen ist"
+            param: "Objekt mit den Attributen 'columnId', 'cell' und 'drop'
+                    Dabei stellt 'drop' die Referenz auf das jQuery Eventobjekt dar"
+          onDropstart:
+            desc: "Trigger wenn ein Drag&Drop Element über eine Zelle geführt wird"
+            param: "Objekt mit den Attributen 'columnId', 'cell', 'ev' und 'drop'
+                    Dabei stellt 'ev' die Referenz auf das jQuery Eventobjekt dar
+                    TODO: Klären was 'drop' macht"
+          onDropend:
+            desc: "Trigger wenn ein Drag&Drop Element von einer Zelle wieder entfernt wird"
+            param: "Das jQuery Eventobjekt wird weitergereicht"
+          onMouseEnter:
+            desc: "Trigger wenn der Mauszeiger über eine Zelle geführt wird"
+            param: "Objekt mit den Attributen 'cell', 'target' und 'columnId'"
+          onMouseLeave:
+            desc: "Trigger wenn der Mauszeiger von einer Zelle entfernt wird"
+            param: "Boolean true"
+          activeCellChanged:
+            desc: "Trigger wenn sich die aktive Zelle der Slickgrid Tabelle ändert"
+            param: "Objekt mit den Attributen 'cell', 'row' und 'columnId'"
+          rowsMoved:
+            desc: "Trigger wenn sich Datensätze innerhalb der Tabelle verschoben haben durch den RowMoveManager"
+            param: "Objekt mit den Attributen 'rows' und 'insertBefore'"
+        command:
+          renderGrid:
+            desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuzeichnen"
+          resizeGrid:
+            desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuberechnen der Höhe, Breite und Spaltenbreiten"
+          changeRowCount:
+            desc: "Schickt der Slickgrid Tabelle die Anforderung den RowCount anzupassen und sich neu zu rendern"
+          changedRows:
+            desc: "Schickt der Slickgrid Tabelle die Anforderung sich zu invalidieren, neu zu rendern und die Selektion zu synchronisieren."
+            param: "object"
+          scrollRowToTop:
+            desc: "Scrollt die gegebene Reihe ganz nach oben."
+            param: "number - Index der Reihe"
+          scrollRowIntoView:
+            desc: "Scrollt die gegebene Reihe in den sichtbaren Bereich."
+            param: "number - Index der Reihe"
+          setSelectedItems:
+            desc: "Selektiert die gegebenen Datensätze"
+            param: "Object oder Array der zu selektierenden Objekte"
+          setOnBeforeEditCellCallback:
+            desc: "setzt die onBeforeEdit Callback Funktion von SlickGrid"
+            param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
+                    Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events"
+          setOnBeforeMoveRowsCallback:
+            desc: "Setzt die onBeforeMoveRows Callback Funktion von SlickGrids RowMoveManager Plugin"
+            param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
+                    Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events"
+    observe:
+      own:
+        data:
+          columns:
+            part: "View"
+            desc: "Setzt der Slickgrid Tabelle neue Spaltendefinitionen und zeichnet die Tabelle erneut"
+          options:
+            part: "View"
+            desc: "Setzt der Slickgrid Tabelle neue Tabellenoptionen und zeichnet die Tabelle erneut"
+          treeColumnWidth:
+            part: "View"
+            desc: "Updated die Spaltendefinition der TreeTable Spalte und zeichnet die Tabelle erneut"
+        event:
+          cellClicked:
+            part: "Controller"
+            desc: "Triggert den Event 'table:cellClicked' oder
+                   'table:toggleTreeCollapse' wenn ein klick auf den TreeTable Expand/Collapse erfolgt ist"
+          rowsMoved:
+            part: "Controller"
+            desc: "Triggert den Event 'table:rowsMoved'"
+          activeCellChanged:
+            part: "Controller"
+            desc: "Triggert den Event 'table:activeCellChanged'"
+          selectedRowsChanged:
+            part: "Controller"
+            desc: "Triggert den Event 'table:selectedDataItemsChanged'"
+          dataChanged:
+            part: "Controller"
+            desc: "Triggert den Event 'table:dataChanged'"
+          sortColumns:
+            part: "Controller"
+            desc: "Triggert den Event 'table:sortData'"
+          dragStarted:
+            part: "Controller"
+            desc: "Triggert den Event 'table:startDragging'"
+          onMouseEnter:
+            part: "Controller"
+            desc: "Triggert den Event 'table:onMouseEnter'"
+          onMouseLeave:
+            part: "Controller"
+            desc: "Triggert den Event 'table:onMouseLeave'"
+          onDrop:
+            part: "Controller"
+            desc: "Triggert den Event 'table:drop'"
+          onDropstart:
+            part: "Controller"
+            desc: "Triggert den Event 'table:dropstart'"
+          onDropend:
+            part: "Controller"
+            desc: "Triggert den Event 'table:dropend'"
+        command:
+          renderGrid:
+            part: "View"
+            desc: "Zeichnet die Tabelle erneut"
+          resizeGrid:
+            part: "View"
+            desc: "Berechnet den Tabellen Viewport erneut und zeichnet die Tabelle erneut"
+          changeRowCount:
+            part: "View"
+            desc: "Berechnet den RowCount des Grids neu und rendert das Grid"
+          changedRows:
+            part: "View"
+            desc: "Invalidiert das Grid, rendert das Grid und synchronisiert die Selektion"
+            param: "object"
+          setSelectedItems:
+            part: "View"
+            desc: "Markiert die gewünschten Datensätze in Slickgrid als 'selektiert'"
+          scrollRowToTop:
+            part: "View"
+            desc: "Scrollt die gewünschte Zeilennummer ganz nach oben"
+          scrollRowIntoView:
+            part: "View"
+            desc: "Scrollt die gewünschte Zeilennummer in den Sichtbereich der Tabelle"
+          setOnBeforeEditCellCallback:
+            part: "View"
+            desc: "Setzt den Callback für den onBeforeEditCell Event von Slickgrid"
+          setOnBeforeMoveRowsCallback:
+            part: "View"
+            desc: "Setzt den Callback für den onBeforeMoveRows Event von Slickgrids RowMoveManager Plugin"
+  ui:
+    plug:
+      default:
+        desc: "Diese Komponente nutzt den Standard-Plug und kennt damit seine Umgebung nicht"

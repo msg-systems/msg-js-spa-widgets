@@ -1,0 +1,9 @@
+package: "app.widget.abstract.table"
+id: "appWidgetAbstractTable"
+desc: "Todo"
+interface:
+  events:
+    publish:
+      toParent:
+        "dataView:onRowCountChanged":
+          desc: "Propagiert, dass sich an den Daten der DataView, etwas geändert hat, dass sich die Anzahl der Zeilen/Items verändert hat."

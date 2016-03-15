@@ -1,5 +1,5 @@
 register:
-  spa.widget.slickGrid:
+  spa.widget.slickGrid.core:
     JS:
     - ../lib/slickgrid/slick.core.js
     - ../lib/slickgrid/slick.grid.js
@@ -8,8 +8,6 @@ register:
     - ../lib/slickgrid/plugins/slick.rowmovemanager.js
     - ../lib/slickgrid/plugins/slick.checkboxselectcolumn.js
     - ../lib/slickgrid/plugins/slick.autotooltips.js
-    - ../lib/slickgrid/slick.dataview.js
-    - ../src/app/ui/_trait/dataView/dataView-ctrl.js
     CSS:
     - name: ../lib/slickgrid/slick.grid.css
       ASSETS:
@@ -21,3 +19,30 @@ register:
       - ../lib/slickgrid/images/expand.gif
       - ../lib/slickgrid/images/header-columns-bg.gif
       - ../lib/slickgrid/images/header-columns-over-bg.gif
+  spa.widget.slickGrid.dataView:
+    JS:
+    - ../lib/slickgrid/slick.dataview.js
+    - ../dist/app/widget/_trait/dataView/dataView-ctrl.js
+  spa.widget.slickGrid.editor:
+    JS:
+    - ../dist/app/widget/table/editor/tableEditor.js
+    CSS:
+    - ../dist/app/widget/table/editor/tableEditor.css
+    MARKUP:
+    - ../dist/app/widget/table/editor/tableEditor.html
+  spa.widget.slickGrid.componentjsWrapper:
+    JS:
+    - ../lib/slickgrid/slick.dataview.js
+    - ../dist/app/widget/_trait/dataView/dataView-ctrl.js
+    - ../dist/app/widget/table/table-ctrl.js
+    - ../dist/app/widget/table/table-model.js
+    - ../dist/app/widget/table/table-view.js
+    - ../dist/app/widget/abstract/table/abstractTable-ctrl.js
+    - ../dist/app/widget/abstract/table/abstractTable-model.js
+    - ../dist/app/widget/abstract/table/abstractTable-view.js
+    - ../dist/app/widget/table/plugins/slick.singleselect.js
+    - ../dist/app/widget/table/plugins/slick.multiselect.js
+    CSS:
+    - ../dist/app/widget/table/table.css
+    MARKUP:
+    - ../dist/app/widget/table/table.html

@@ -1,0 +1,46 @@
+register:
+  spa.widget.bootstrap:
+    CSS:
+    - name: ../node_modules/bootstrap/dist/css/bootstrap.css
+      ASSETS:
+      - ../node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
+      - ../node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
+      - ../node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+      - ../node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+      - ../node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
+  spa.widget.bootstrap.affix:
+    JS:
+    - ../node_modules/bootstrap/js/affix.js
+  spa.widget.bootstrap.alert:
+    JS:
+    - ../node_modules/bootstrap/js/alert.js
+  spa.widget.bootstrap.button:
+    JS:
+    - ../node_modules/bootstrap/js/button.js
+  spa.widget.bootstrap.carousel:
+    JS:
+    - ../node_modules/bootstrap/js/carousel.js
+  spa.widget.bootstrap.collapse:
+    JS:
+    - ../node_modules/bootstrap/js/collapse.js
+  spa.widget.bootstrap.dropdown:
+    JS:
+    - ../node_modules/bootstrap/js/dropdown.js
+  spa.widget.bootstrap.modal:
+    JS:
+    - ../node_modules/bootstrap/js/modal.js
+  spa.widget.bootstrap.popover:
+    JS:
+    - ../node_modules/bootstrap/js/popover.js
+  spa.widget.bootstrap.scrollspy:
+    JS:
+    - ../node_modules/bootstrap/js/scrollspy.js
+  spa.widget.bootstrap.tab:
+    JS:
+    - ../node_modules/bootstrap/js/tab.js
+  spa.widget.bootstrap.tooltip:
+    JS:
+    - ../node_modules/bootstrap/js/tooltip.js
+  spa.widget.bootstrap.transition:
+    JS:
+    - ../node_modules/bootstrap/js/transition.js

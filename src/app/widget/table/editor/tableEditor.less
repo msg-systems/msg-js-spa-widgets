@@ -1,0 +1,31 @@
+.SlickEditor {
+    &.textEditor {
+        width: 100%;
+    }
+
+    &.longTextEditor {
+        z-index: 9999;
+        position: absolute;
+        background: white;
+        padding: 2px;
+        font-size: .7rem;
+        border: 1px solid #000;
+        -webkit-box-shadow: 0.05rem 0.05rem 0.1rem #ccc;
+        box-shadow: 0.05rem 0.05rem 0.1rem #ccc;
+
+        textarea {
+            font-family: "Verdana";
+            background: white;
+            height: 80px;
+            border: 0;
+            width: 100%;
+        }
+    }
+
+    &.checkboxEditor {
+        height: 100%;
+        width: 100%;
+        z-index: 9999;
+    }
+
+}
