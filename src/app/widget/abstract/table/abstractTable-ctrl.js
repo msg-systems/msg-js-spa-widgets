@@ -380,7 +380,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 matchesForValues.push(valMatches)
             })
             // nur wenn alle einzlenen Strings (filterValues) in der Zeile in irgendeiner Spalte vorhanden sind, soll die Zeile auch angezeigt werden
-            return !_.contains(matchesForValues, false)
+            return !_.includes(matchesForValues, false)
         },
 
         filterTableEntries (filterValue) {
