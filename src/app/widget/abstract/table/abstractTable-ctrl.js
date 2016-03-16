@@ -2,7 +2,7 @@
 if (typeof ComponentJS === "undefined") {
     throw "This is a wrapper for SlickGrid to ComponentJS. It requires ComponentJS to be loaded"
 }
-if (!(typeof app !== "undefined"  && typeof app.fw !== "undefined" && typeof app.fw.abstract !== "undefined" && typeof app.fw.abstract.ctrl !== "undefined")) {
+if (!(typeof app !== "undefined" && typeof app.fw !== "undefined" && typeof app.fw.abstract !== "undefined" && typeof app.fw.abstract.ctrl !== "undefined")) {
     throw "This is a abstract component for a table. It needs to extend from the component app.fw.abstract" +
     "from the msg-js-spa-framework. So the controller from the component app.fw.abstract is required to be loaded"
 }
@@ -179,19 +179,19 @@ ___config.package___.ctrl = ComponentJS.clazz({
         // has to be overwritten of the concrete controller
         // must return an html fragment
         multiSelectMarkup () {
-            return ""
+            throw "Please overwrite the method 'multiSelectMarkup' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
         // must return an html fragment
         singleSelectMarkup () {
-            return ""
+            throw "Please overwrite the method 'singleSelectMarkup' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
         // must return an html fragment
         treeMarkup () {
-            return ""
+            throw "Please overwrite the method 'treeMarkup' in the concrete table: " + ComponentJS(this).name()
         },
 
         //can be overwritten of the concrete controller

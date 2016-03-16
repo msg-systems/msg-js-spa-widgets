@@ -15,11 +15,8 @@
 
         var _options = $.extend(true, {}, _defaults, options);
 
-        //var uncheckedMarkup = $("<div />").append($.markup("SlickMultiSelect_unselected")).html();
-        //var checkedMarkup = $("<div />").append($.markup("SlickMultiSelect_selected")).html();
-
-        var uncheckedMarkup = markup.uncheckedMarkup;
-        var checkedMarkup = markup.checkedMarkup;
+        var uncheckedMarkup = $("<div />").append(markup.uncheckedMarkup).html();
+        var checkedMarkup = $("<div />").append(markup.checkedMarkup).html();
 
         function init(grid) {
             _grid = grid;

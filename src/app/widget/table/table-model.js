@@ -1,5 +1,6 @@
 ComponentJS.ns("___config.package___");
 ___config.package___.model = ComponentJS.clazz({
+    mixin: [ComponentJS.marker.model],
     dynamics: {
         optionsFormat: "{ " +
             // slickgrid grid options
@@ -78,8 +79,8 @@ ___config.package___.model = ComponentJS.clazz({
         "tableDroppable?: boolean, " +
         "}",
         selectMarkupFormat: "{ " +
-        "uncheckedMarkup: any, " +
-        "checkedMarkup: any, " +
+        "uncheckedMarkup?: any, " +
+        "checkedMarkup?: any, " +
         "}"
     },
     protos: {

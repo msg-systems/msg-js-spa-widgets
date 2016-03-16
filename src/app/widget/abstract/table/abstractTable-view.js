@@ -3,7 +3,7 @@ if (typeof app.fw.abstract.view === "undefined") {
     "from the msg-js-spa-framework. So the view from the component app.fw.abstract is required to be loaded"
 }
 
-ComponentJS.ns("___config.package___");
+ComponentJS.ns("___config.package___")
 ___config.package___.view = ComponentJS.clazz({
     extend: app.fw.abstract.view,
     dynamics: {
@@ -12,12 +12,13 @@ ___config.package___.view = ComponentJS.clazz({
     protos: {
 
         render () {
-            ComponentJS(this).socket({scope: "table", ctx: this.table, spool: ComponentJS(this).state()});
+            this.base()
+            ComponentJS(this).socket({scope: "table", ctx: this.table, spool: ComponentJS(this).state()})
         },
 
         prepareMaskReferences () {
-            this.base();
-            this.table = this.ui;
+            this.base()
+            this.table = this.ui
         }
 
     }

@@ -14,6 +14,7 @@ if (typeof i18next === "undefined" && typeof i18nextJquery === "undefined") {
 
 ComponentJS.ns("___config.package___")
 ___config.package___.ctrl = ComponentJS.clazz({
+    mixin: [ComponentJS.marker.controller],
     dynamics: {
         useDataView: false
     },
@@ -21,7 +22,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
         create () {
 
-            this.model = cs(this).create("model", ___config.package___.model)
+            this.model = ComponentJS(this).create("model", ___config.package___.model)
             this.view = this.model.create("view", ___config.package___.view)
             ComponentJS(this).property("ComponentJS:state-auto-increase", true)
 

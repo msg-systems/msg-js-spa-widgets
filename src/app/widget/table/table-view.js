@@ -1,5 +1,6 @@
 ComponentJS.ns("___config.package___");
 ___config.package___.view = ComponentJS.clazz({
+    mixin: [ComponentJS.marker.view],
     dynamics: {
         markupName: "___config.id___",
         grid: null,
@@ -19,9 +20,7 @@ ___config.package___.view = ComponentJS.clazz({
         render () {
 
             this.ui = $.markup(this.markupName, this.markupParams).localize();
-            if (this.useDefaultPlug) {
-                ComponentJS(this).plug({object: this.ui, spool: ComponentJS(this).state()});
-            }
+            ComponentJS(this).plug({object: this.ui, spool: ComponentJS(this).state()});
 
             this.interruptCallback = this.interruptClickHandler.bind(this);
             this.clickOutsideCallback = this.clickOutsideHandler.bind(this);
