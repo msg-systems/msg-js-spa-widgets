@@ -41,12 +41,6 @@ ___config.package___.model = ComponentJS.clazz({
                 editable: false,
                 activateSelectPlugIn: false,
                 activateRowSelectionModel: true
-/*
-                this.options.editable = true;
-            this.options.autoEdit = true;
-            this.options.multiSelect = true;
-            this.options.activateSelectPlugIn = true;
-            this.options.enableCellNavigation = true;*/
             };
         },
 

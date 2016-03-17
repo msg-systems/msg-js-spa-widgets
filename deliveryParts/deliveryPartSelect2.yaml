@@ -1,7 +1,11 @@
 register:
   spa.widget.select2:
     JS:
-    - ../node_modules/select2/dist/js/select2.full.js
-    - ../node_modules/select2/dist/js/i18n/de.js
+    - ../node_modules/select2/select2.js
+    - ../node_modules/select2/select2_locale_de.js
     CSS:
-    - ../node_modules/select2/dist/css/select2.css
+    - name: ../node_modules/select2/select2.css
+      ASSETS:
+      - ../node_modules/select2/select2.png
+      - ../node_modules/select2/select2x2.png
+      - ../node_modules/select2/select2-spinner.gif

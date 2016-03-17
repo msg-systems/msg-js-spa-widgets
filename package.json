@@ -25,7 +25,7 @@
         "prepublish": "grunt"
     },
     "dependencies": {
-        "select2":      "4.0.2",
+        "select2":      "3.5.1",
         "vis":          "4.15.1",
         "bootstrap":    "3.3.6"
     },
