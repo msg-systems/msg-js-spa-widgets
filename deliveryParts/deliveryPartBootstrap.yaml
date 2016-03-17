@@ -44,3 +44,9 @@ register:
   spa.widget.bootstrap.transition:
     JS:
     - ../node_modules/bootstrap/js/transition.js
+  spa.widget.bootstrap.datepicker:
+    JS:
+    - ../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js
+    - ../node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js
+    CSS:
+    - ../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css
