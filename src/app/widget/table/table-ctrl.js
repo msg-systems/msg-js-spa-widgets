@@ -226,7 +226,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             this.model.observe({
                 name: "event:selectedRowsChanged", spool: "..:prepared",
                 func: (ev, selectedDataItems) => {
-                    if (this.model.value("data:options").activateSelectPlugIn)
+                    if (this.model.value("data:options").activateSelectPlugIn || this.model.value("data:options").activateRowSelectionModel)
                         ComponentJS(this).publish("table:selectedDataItemsChanged", selectedDataItems)
                 }
             })
