@@ -292,7 +292,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             }
 
             // if it is possible to select row(s) in table, update the selection after the data changed
-            if (this.model.value("data:tableOptions.activateSelectPlugIn"))
+            if (this.model.value("data:tableOptions.activateSelectPlugIn") || this.model.value("data:tableOptions.activateRowSelectionModel"))
                 this.updateSelectedTableEntriesFromOutside(this.selectedData())
         },
 
