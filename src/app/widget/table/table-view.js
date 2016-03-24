@@ -237,11 +237,13 @@ ___config.package___.view = ComponentJS.clazz({
                 if (!this.disableSlickevents) {
                     let selectedDataItems = [], i;
                     for (i = 0; i < args.rows.length; i++) {
-                        selectedDataItems.push(args.grid.getData().getItem(args.rows[i]));
+                        let item = args.grid.getData().getItem(args.rows[i])
+                        if (item)
+                            selectedDataItems.push(item)
                     }
-                    ComponentJS(this).value("event:selectedRowsChanged", selectedDataItems);
+                    ComponentJS(this).value("event:selectedRowsChanged", selectedDataItems)
                 }
-                this.registerAdditionalSlickEvents();
+                this.registerAdditionalSlickEvents()
             });
 
             this.grid.onActiveCellChanged.subscribe((e, args) => {
