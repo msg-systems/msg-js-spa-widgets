@@ -8,7 +8,7 @@ ___config.package___.model = ComponentJS.clazz({
     extend: app.fw.abstract.model,
     dynamics: {
         options: null,
-        spalten: null
+        columns: null
     },
     protos: {
 
@@ -27,9 +27,9 @@ ___config.package___.model = ComponentJS.clazz({
         },
 
         render () {
-            this.initializeSpalten();
-            ComponentJS(this).value("data:tableColumns", this.spalten);
-            ComponentJS(this).value("data:allAvailableColumns", this.spalten);
+            this.initializeColumns();
+            ComponentJS(this).value("data:tableColumns", this.columns);
+            ComponentJS(this).value("data:allAvailableColumns", this.columns);
         },
 
         initializeOptions () {
@@ -44,8 +44,8 @@ ___config.package___.model = ComponentJS.clazz({
             };
         },
 
-        initializeSpalten () {
-            this.spalten = []
+        initializeColumns () {
+            this.columns = []
         }
 
     }

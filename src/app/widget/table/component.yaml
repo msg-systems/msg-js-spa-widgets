@@ -76,6 +76,10 @@ interface:
           desc: "Meldet die inhaltliche Veränderung einer Tabellenzelle durch den Nutzer"
           param: "row                Die Zeilennummer, in welcher verändert wurde
                   cell               Die Spaltennummer, in welcher verändert wurde"
+        "table:newRowAdded":
+          desc: "Meldet, dass eine Tabellenzeile hinzugefügt wurde"
+          param: "item:             Das Tabellen-Präsentations-Objekt
+                  columnId:         Die Id der Spalte, in der eine Veränderng stattgefunden hat"
         "table:sortData":
           desc: "Meldet des Sort-Objekt"
           param: "Objekt mit den Attributen
@@ -141,6 +145,11 @@ interface:
             param: "Objekt mit den Attributen:
                     'row'      Zeilennummer der veränderten Zelle
                     'cell'     Spaltennummer der veränderten Zelle"
+          newRowAdded:
+            desc: "Triggert, wenn eine neue Zeile hinzugefügt wurde, das gibt es nur wenn die Option 'enableAddRow' auf true gesetzt wurde."
+            param: "Objekt mit den Attributen:
+                    'item': Tabellen-Präsentations-Objekt
+                    'column': Spalten-Objekt"
           sortColumns:
             desc: "Trigger wenn die Daten neu sortiert wurden"
             param: "Daten des Slickgrid Tabelle onSort Callbacks werden durchgereicht"
@@ -227,6 +236,9 @@ interface:
           dataChanged:
             part: "Controller"
             desc: "Triggert den Event 'table:dataChanged'"
+          newRowAdded:
+            part: "Controller"
+            desc: "Triggert den Event 'table:newRowAdded'"
           sortColumns:
             part: "Controller"
             desc: "Triggert den Event 'table:sortData'"

@@ -227,6 +227,10 @@ ___config.package___.view = ComponentJS.clazz({
                 }
             });
 
+            this.grid.onAddNewRow.subscribe((e, args) => {
+                ComponentJS(this).value("event:newRowAdded", args)
+            });
+
             this.grid.onSort.subscribe((e, args) => {
                 ComponentJS(this).value("event:sortColumns", args, true);
                 this.grid.resetActiveCell();

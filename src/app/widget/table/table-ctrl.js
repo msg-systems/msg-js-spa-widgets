@@ -242,6 +242,14 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             this.model.observe({
+                name: "event:newRowAdded", spool: "..:prepared",
+                func: (ev, args) => {
+                    if (args.item && args.column)
+                        ComponentJS(this).publish("table:newRowAdded", args.item, args.column.id)
+                }
+            })
+
+            this.model.observe({
                 name: "event:sortColumns", spool: "..:prepared",
                 func: (ev, args) => {
                     if (args && args.sortCol) {

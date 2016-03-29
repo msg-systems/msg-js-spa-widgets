@@ -99,6 +99,7 @@ ___config.package___.model = ComponentJS.clazz({
                 "event:selectedRowsChanged": {value: [], valid: "[object*]", autoreset: true},
                 "event:cellClicked": {value: null, valid: "object", autoreset: true},
                 "event:dataChanged": {value: {}, valid: "object", autoreset: true},
+                "event:newRowAdded": {value: {}, valid: "object", autoreset: true},
                 "event:sortColumns": {value: null, valid: "object", autoreset: true},
                 "event:dragStarted": {value: {}, valid: "object", autoreset: true},
                 "event:onDrop": {value: {}, valid: "object", autoreset: true},
