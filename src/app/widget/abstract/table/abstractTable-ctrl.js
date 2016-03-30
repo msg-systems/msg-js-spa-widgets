@@ -34,6 +34,10 @@ ___config.package___.ctrl = ComponentJS.clazz({
                     this.updateCollapsedStateOfAllItemsTo(collapsed)
             })
 
+            this.registerAPI("invalidate", () => {
+                this.table.call("resizeGrid")
+            })
+
             if (this.hasGrouping) {
                 this.model.value("data:tableOptions.activateGrouping", true)
             }

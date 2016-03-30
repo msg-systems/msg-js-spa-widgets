@@ -1,9 +1,191 @@
 package: "app.widget.abstract.table"
 id: "appWidgetAbstractTable"
-desc: "Todo"
+desc: "Dies ist eine abstrakte Komponente, welche Funktionalitäten zur Anbindung des table-widgets anbietet. Wird diese abstrakte Komponente eingebunden, muss sich nicht händisch
+      um die Integration des table-widgets gekümmert werden. Überall wo eine Tabelle eingebunden wird sollte es über diese abstrakte Komponente laufen.
+      Die Komponente stellt Methoden für DataView bereit, um einzelne Tabelleneinträge zu verändern, löschen oder hinzuzufügen.
+      Außerdem bietet diese Komponente Methoden, um aus Daten-Objekten Präsentation-Objekte, welche die Tabelle benötigt, zu generieren.
+      Die Komponente table wird initialisiert und die notwendigen Daten übergeben (Daten, Spalten, Optionen)
+      Die hiermit eingebundene Tabelle ist standardmäßig
+       - nicht multiselect über eigene Spalte (multiSelect: false)
+       - nicht singleselect über eigene Spalte (activateSelectPlugIn: false)
+       - aber selektierbar durch Klick irgendwo in eine Zeile (activateRowSelectionModel: true)
+       - nicht editierbar (editable: false)
+       - erlaubt es nicht Spalten zu verschieben ( enableColumnReorder: false)
+       - hat eine Zeilenhöhe von 27px (rowHeight: 27)
+       - passt die Spalten auf die verfügbare Breite an (forceFitColumns: true)"
 interface:
+  api:
+    register:
+      changeCollapsedStates:
+        desc: "Passt den Klappzustand aller Items auf den gegebenen Wert an."
+        param: "boolean"
+      invalidate:
+        desc: "Ruft den Call 'resizeGrid' der Tabellenkomponente auf"
+    call:
+      resizeGrid:
+        part: "widget-table"
+        desc: "Sagt dem Tabellenwidget, dass sich das Grid in der Größe geändert hat und somit neu gerendert werden muss"
+      setTableData:
+        part: "widget-table"
+        desc: "Übergibt den Tabellenwidget sein SlickGrid DataView Objekt"
+        param: "SlickGrid DataView Objekt"
+      setGroupItemMetadataProvider:
+        part: "widget-table"
+        desc: "Übergibt den Tabellenwidget das Grouping-Plugin"
+        param: "SlickGrid Plugin"
+      multiSelectMarkup:
+        part: "widget-table"
+        dssc: "Übergibt der Tabelle das Markup für die Spalte für Multi-Select"
+        param: "HTML-Markup"
+      singleSelectMarkup:
+        part: "widget-table"
+        dssc: "Übergibt der Tabelle das Markup für die Spalte für Single-Select"
+        param: "HTML-Markup"
+      changeRowCount:
+        part: "widget-table"
+        desc: "Gibt der Tabelle die Info, dass sich der Row Count geändert hat"
+      changedRows:
+        part: "widget-table"
+        desc: "Gibt der Tabelle die Info, dass sich die Zeilen geändert haben"
+        param: "object"
+
+      setTableHeader:
+        part: "widget-table"
+        desc: "Übergibt dem Tabellenwidget die Spaltendefinitionen"
+        param: "object - Spaltendefinitions-Objekte"
+      setTableOptions:
+        part: "widget-table"
+        desc: "Übergibt dem Tabellenwidget die Optionen"
+        param: "entweder ein komplettes Objekt mit allen Optionen oder
+                zwei Parameter: ein bestimmtes Attribut mit einem bestimmten Wert"
+      setOnBeforeEditCellCallback:
+        part: "widget-table"
+        desc: "Dieser Call darf erst im Lebenszyklus 'render' gemacht werden."
+        param: "function - Eine Funktion die vom Widget aus aufgerufen wird um zu überprüfen ob eine bestimmte Zelle editierbar ist"
+      setOnBeforeMoveRowsCallback:
+        part: "widget-table"
+        desc: "Dieser Call darf erst im Lebenszyklus 'render' gemacht werden."
+        param: "function - Eine Funktion die vom Widget aus aufgerufen wird um zu überprüfen ob eine bestimmte Zeile verschoben werden darf."
+      renderGrid:
+        part: "widget-table"
+        desc: "Sagt dem Tabellenwidget, dass das Grid gerendert werden soll."
+      scrollToIndex:
+        part: "widget-table"
+        desc: "Sagt dem Tabellenwidget, dass das Grid an einen bestimmten Index scrollen soll."
+      setSelectedItems:
+        desc: "Übergebe die gewünschten selektierten Präsentation-Objekten der Tabelle"
+        param: "Array mit selektierten Zeilen (Präsentation-Objekten)"
+        part: "table"
   events:
     publish:
       toParent:
+        dataView:
+          desc: "Überprüft ob die Parent-Komponente bereits einen DataView regisitriert hat, falls ja wird dieses in den dynamics 'this.dataView' gesetzt
+                Rückgabeparamter: DataView-Objekt oder null"
+    subscribe:
+      forChildren:
+        "table:activeCellChanged":
+          desc: "Dieses Event wird gefangen, wenn sich die aktive Zelle in der Tabelle geändert hat. Das Modelfeld 'data:activeCellsPresentationEntry' wird auf das
+                Präsentation-Objekt der Zeile, in der die Zelle liegt, gesetzt"
+          param: "object - activeCellObj - das Objekt der aktiven Zelle mit dem Attribut dataObject, welche das Präsentation-Objekt darstellt."
+        "table:sortData":
+          desc: "Das Modelfeld 'data:sortObject' wird befüllt mit den gegebenen Parameter angereichert mit dem Attribut 'field' = col.field"
+          param: "Objekt mit den Attributen
+                  'col': Die Spalte, anhand der sortiert werden soll
+                  'asc': 1 oder -1 - die Richtung in die sortiert werden soll"
+        "table:selectedDataItemsChanged":
+          desc: "Event, das gefangen wird, wenn sich die Selektion der Zeilen von der Tabelle aus geändert hat.
+                Nur wenn genau ein Präsentation-Objekten selektiert ist wird es in das Modelfeld 'data:selectedTableEntriesFromTable' gesetzt.
+                Ansonsten wird das Modelfeld 'data:selectedTableEntriesFromTable' auf ein leeres Array gesetzt"
+          param: "Array von selektierten Tabelleneinträgen (Präsentation-Objekten)"
+        "dataView:scrollToIndex":
+          desc: "Sagt der Tabelle, an den gegebenen Index zu scrollen"
+          param: "number - Index"
         "dataView:onRowCountChanged":
-          desc: "Propagiert, dass sich an den Daten der DataView, etwas geändert hat, dass sich die Anzahl der Zeilen/Items verändert hat."
+          desc: "Ruft den Call 'changeRowCount' der Tabellenkomponente auf"
+        "dataView:onRowsChanged":
+          desc: "Ruft den Call 'changedRows' der Tabellenkomponente auf und übergibt den gegebenen Parameter"
+          param: "args - Objekt"
+  model:
+    define:
+      own:
+        data:
+          tableOptions:
+            desc: "Hält alle Optionen für die Tabelle"
+            param: "Objekt mit Optionen"
+          tableColumns:
+            desc: "Hält die sichtbaren Spalten der Tabelle"
+            param: "Array von Spalten-Objekten"
+          allAvailableColumns:
+            desc: "Hält alle verfügbaren Spalten der Tabelle"
+            param: "Array von Spalten-Objekten"
+          sortObject:
+            desc: "Hält das aktuelle Sort-Objekt"
+            param: "Objekt mit den Attributen
+                    asc: 1 oder -1 für auf- oder absteigend
+                    field: das Attribut des Tabelleneintrags nach dem sortiert werden soll
+                    col: optional - initial nicht gefüllt - gefüllt wenn das Objekt über Klick auf Header sortiert wird und nciht wenn der initiale Sort-Wert gesetzt wird"
+          filterValue:
+            desc: "Hält den aktuellen Suchstring"
+            param: "string"
+          activeCellsPresentationEntry:
+            desc: "Hält von der aktiven Zelle von der dazugehörenden Zeile das Präsentation-Objekt"
+            param: "object - das Präsentation-Objekt = Zeile, von welchen gerade eine Zelle aktiv ist"
+          selectedTableEntriesFromTable:
+            desc: "Hält alle selektierten Tabelleneinträgen, die von der Tabelle kommen"
+            param: "Array von selektierten Tabelleneinträgen, welche vom der Tabelle getriggert wurden, dass sie selektiert wurden"
+          selectedTableEntriesFromOutside:
+            desc: "Hält alle  selektierten Tabelleneinträgen, die von außen gesetzt werden"
+            param: "Array von selektierten Tabelleneinträgen, welche von außen in die Tabelle gesetzt werden"
+    observe:
+      global:
+        command:
+          resize:
+            desc: "Der Tabelle wird gesagt sich zu resizen, es wird ein Call auf 'resizeGrid' aufgerufen."
+      own:
+        data:
+          sortObject:
+            part: "Controller"
+            desc: "Handelt es sich um einen Baum, werden die Items sortiert in die DataView gesetzt,
+                  handlet es sich um eine normale Tabelle werden die Items der DataView sortiert.
+                  Die Sortierung findet in beiden Fällen anhand der definierten Sort-Methode statt."
+            param: "Objekt mit den Attributen
+                    asc: 1 oder -1 für auf- oder absteigend
+                    field: das Attribut des Tabelleneintrags nach dem sortiert werden soll
+                    col: optional - initial nicht gefüllt - gefüllt wenn das Objekt über Klick auf Header sortiert wird und nciht wenn der initiale Sort-Wert gesetzt wird"
+          filterValue:
+            part: "Controller"
+            desc: "Starten die Suche in den Tabellendaten. Es werden die Zeilen herausgefiltert, die nicht den Suchstring, bzw. nicht jedes Wort des Suchstrings in der kompletten Zeile enthalten.
+                  Die einzelne Wörter können dabei auf verschiedene Zellen verteilt sein."
+            param: "string"
+          tableColumns:
+            part: "Controller"
+            desc: "Die übergeben Spalten werden dem Tabellen-Widget übergeben (Call 'setTableOptions')"
+            param: "Array mit Spalten-Objekten"
+          tableOptions:
+            part: "Controller"
+            desc: "Es wird überprüft ob sich die Gesamtmenge der Optionen verändert hat oder nur eine bestimmte Option.
+                  Im ersten Fall wird ein Call auf 'setTableOptions' gemacht und die Gesamtmenge der Optionen übergeben.
+                  Im zweiten Fall wird ein Call auf 'setTableOptions' gemacht und das Attribut das sich geändert hat und der neue Wert übergeben."
+            param: "ev - ComponentJS-Event
+                    newValue - Objekt (Optionen-Objekt) oder der neue Wert eines bestimmten Attributs
+                    oldValue - vorherige gesetzte Objekt (Optionen-Objekt) oder der vorherige Wert eines bestimmten Attributs
+                    op: Operation (String) - wird nciht benötigt, nicht ausgelesen
+                    path - string, der Pfad des Modelfeldes"
+          activeCellsPresentationEntry:
+            part: "Controller"
+            desc: "Dies wird benötigt um zu untersuchen, ob sich die Zeile der selektierten Zelle geändert hat und somit eine andere Zeile selektiert ist.
+                  Ist dies nämlich der Fall sollen erst dann die Änderungen die in der zuvor selektierten Zeile gemacht wurden gespeichert werden.
+                  Es wird die Methode 'saveData' aufgerufen, welche von den Komponenten, welche diese abstrakte Komponente einbinden, überschrieben werden muss."
+            param: "ev - ComponentJS-Event
+                    newValue - das Präsentation-Objekt der aktuell aktiven Zelle
+                    oldValue - das Präsentation-Objekt der zuvor aktiven Zelle"
+          selectedTableEntriesFromOutside:
+            part: "Controller"
+            desc: "Sagt dem Tabellenwidget, dass die übergebene Präsentations-Objekte in der Tabelle selektiert werden sollen (call auf 'setSelectedItems' mit dem gegebene Array als Übergabeparameter)"
+            param: "Array mit Präsentation-Objekten der Tabelle, welche in der Tabelle als selektiert markiert werden sollen"
+          selectedTableEntriesFromTable:
+            part: "Controller"
+            desc: "Aus den Präsentation-Objekten werden die dahinter liegenden Entitäten ausgelesen und sollen in das Modelfel der konkreten Komponente gesetzt werden,
+                  in dem die Selektion gehalten wird. Dafür wird die Methode 'selectedData' aufgerufen, welche von jeder konkreten Komponente überschrieben werden muss"
+            param: "Array mit Präsentation-Objekten der Tabelle, welche von der Tabelle als selektiert markiert wurden"

@@ -10,9 +10,6 @@ interface:
         "dataView:onRowsChanged":
           desc: "Propagiert, dass sich an den Daten der DataView, etwas geändert hat, dass sich dieZeilen/Items verändert hat."
           param: "object - args mit den Attribut 'rows' - Array der Reihen (als Index) welche, sich geändert haben."
-        "dataView:itemAddedAtIndex":
-          desc: "Propagiert den Index, an dem eine neue Zeile/Item hinzgefügt wurde."
-          param: "number - Index der Zeile/Item, welches hinzugefügt wurde"
-        "dataView:itemExpandedAtIndex":
-          desc: "Propagiert den Index, an dem sich das Item befindet, zu dem ausgeklappt wurde"
+        "dataView:scrollToIndex":
+          desc: "Propagiert den Index, zu dem gescrollt werden soll."
           param: "number - Index der Zeile/Item"

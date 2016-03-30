@@ -14,9 +14,9 @@ interface:
       setTableOptions:
         desc: "Erlaubt das initiale Setzen der Tabellenoptionen"
         param: "Ein Object das dem beschriebenen Format im table-model.js -> dynamics -> optionsFormat folgt"
-      setDataView:
-        desc: "Erlaubt das Setzen der DataView"
-        param: "Ein SlickGrid DataView Objekt"
+      setTableData:
+        desc: "Erlaubt das Setzen der DataView oder der Datenobjekten"
+        param: "Ein SlickGrid DataView Objekt oder Array"
       renderGrid:
         desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuzeichnen"
       resizeGrid:
@@ -121,6 +121,9 @@ interface:
           dataView:
             desc: "Hält ein SlickGrid DataView Objekt"
             param: "Objekt"
+          data:
+            desc: "Hält die Tabellendaten"
+            param: "Array"
           columns:
             desc: "Menge der Slickgrid Spaltendefinitionen"
             param: "Array von Objekten mit der Signatur - siehe table-model.js -> dynamics -> singleColumnFormat"
