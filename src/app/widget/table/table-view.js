@@ -331,28 +331,15 @@ ___config.package___.view = ComponentJS.clazz({
             let checkboxSelector, treeToggler;
             if (options.activateSelectPlugIn) {
                 if (options.multiSelect) {
-                    checkboxSelector = new Slick.MultiSelect({
-                        minWidth: 24,
-                        width: 24,
-                        cssClass: "centerColumn",
-                        headerCssClass: "centerColumn",
-                        toolTip: i18n.t("app.widgetTable.header.selectAll")
-                    }, ComponentJS(this).value("data:multiSelectMarkup"));
+                    checkboxSelector = new Slick.MultiSelect(ComponentJS(this).value("data:multiSelectOptions"));
                 } else {
-                    checkboxSelector = new Slick.SingleSelect({
-                        minWidth: 24,
-                        width: 24,
-                        cssClass: "centerColumn",
-                        headerCssClass: "centerColumn"
-                    }, ComponentJS(this).value("data:singleSelectMarkup"));
+                    checkboxSelector = new Slick.SingleSelect(ComponentJS(this).value("data:singleSelectOptions"));
                 }
                 this.functionalColumns.push(checkboxSelector.getColumnDefinition());
             }
 
             if (options.activateTreeTableFunctionality) {
-                treeToggler = new Slick.TreeTable({
-                    minWidth: 24
-                });
+                treeToggler = new Slick.TreeTable(ComponentJS(this).value("data:treeOptions"));
                 this.functionalColumns.push(treeToggler.getColumnDefinition());
             }
 

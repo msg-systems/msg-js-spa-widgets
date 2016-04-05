@@ -78,9 +78,14 @@ ___config.package___.model = ComponentJS.clazz({
             // JHO: the rest here must be eliminated
         "tableDroppable?: boolean, " +
         "}",
-        selectMarkupFormat: "{ " +
-        "uncheckedMarkup?: any, " +
-        "checkedMarkup?: any, " +
+        pluginOptionFormat: "{ " +
+        "markups?: any, " +
+        "width?: number, " +
+        "minWidth?: number, " +
+        "maxWidth?: number, " +
+        "toolTip?: string, " +
+        "cssClass?: string, " +
+        "headerCssClass?: string, " +
         "}"
     },
     protos: {
@@ -94,8 +99,9 @@ ___config.package___.model = ComponentJS.clazz({
                 "data:selectedCell": {value: null, valid: "object"},
                 "data:selectedItems": {value: [], valid: "[object*]"},
                 "data:treeColumnWidth": {value: 0, valid: "number"},
-                "data:singleSelectMarkup": {value: null, valid: this.selectMarkupFormat},
-                "data:multiSelectMarkup": {value: null, valid: this.selectMarkupFormat},
+                "data:singleSelectOptions": {value: null, valid: this.pluginOptionFormat},
+                "data:multiSelectOptions": {value: null, valid: this.pluginOptionFormat},
+                "data:treeOptions": {value: null, valid: this.pluginOptionFormat},
                 "event:selectedRowsChanged": {value: [], valid: "[object*]", autoreset: true},
                 "event:cellClicked": {value: null, valid: "object", autoreset: true},
                 "event:dataChanged": {value: {}, valid: "object", autoreset: true},

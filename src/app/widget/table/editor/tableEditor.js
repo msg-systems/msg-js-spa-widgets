@@ -125,225 +125,228 @@ app.widget.table.editor = (() => {
         };
     };
 
-    _api.textEditor = (maxLength) => {
+    _api.textEditor = function (maxLength) {
         var maxEditLengthOrFunction = maxLength || 999;
 
-        return (args) => {
-            this.grid = args.grid;
-            this.column = args.column;
+        return function (args) {
+            var self = this;
+            self.grid = args.grid;
+            self.column = args.column;
             var $container = $(args.container);
 
-            this.interruptClickHandler = _common.interruptClickHandler();
-            this.init = () => {
-                let maxEditLength;
-                if (typeof maxEditLengthOrFunction === 'function')
-                    maxEditLength = maxEditLengthOrFunction.call(this, args.item);
+            self.interruptClickHandler = _common.interruptClickHandler();
+            self.init = function () {
+                var maxEditLength;
+                if (typeof maxEditLengthOrFunction === "function")
+                    maxEditLength = maxEditLengthOrFunction.call(self, args.item);
                 else
                     maxEditLength = maxEditLengthOrFunction;
-                this.$editor = $container.markup('textEditor', { maxLength: maxEditLength }).i18n()
-                    .bind('keydown.nav', e => {
+                self.$editor = $container.markup("textEditor", {maxLength: maxEditLength}).localize()
+                    .bind("keydown.nav", function (e) {
                         if (e.which === keys.LEFT || e.which === keys.RIGHT) {
                             e.stopImmediatePropagation();
                         }
                     })
-                    .bind('mousedown', this.interruptClickHandler)
+                    .bind("mousedown", self.interruptClickHandler)
                     .focus();
             };
-            this.destroy = _common.destroyEditor(this);
-            this.focus = _common.focusEditor(this);
-            this.getValue = _common.getEditorTextValue(this);
-            this.serializeValue = _common.getEditorTextValue(this);
-            this.setValue = (val) => {
-                this.$editor.val(val);
+            self.destroy = _common.destroyEditor(self);
+            self.focus = _common.focusEditor(self);
+            self.getValue = _common.getEditorTextValue(self);
+            self.serializeValue = _common.getEditorTextValue(self);
+            self.setValue = function (val) {
+                self.$editor.val(val);
             };
-            this.loadValue = (item) => {
-                this.defaultValue = item[this.column.field] || '';
-                this.$editor.val(this.defaultValue);
-                this.$editor[0].defaultValue = this.defaultValue;
-                this.$editor.select();
+            self.loadValue = function (item) {
+                self.defaultValue = item[self.column.field] || "";
+                self.$editor.val(self.defaultValue);
+                self.$editor[0].defaultValue = self.defaultValue;
+                self.$editor.select();
             };
-            this.applyValue = _common.applyValue(this);
-            this.save = () => {
+            self.applyValue = _common.applyValue(self);
+            self.save = function () {
                 args.commitChanges();
             };
-            this.cancel = () => {
-                this.$editor.val(this.defaultValue);
+            self.cancel = function () {
+                self.$editor.val(self.defaultValue);
                 args.cancelChanges();
             };
-            this.isValueChanged = _common.hasTextValueChangedInEditor(this);
-            this.validate = _common.validateEditorForColumn(this);
+            self.isValueChanged = _common.hasTextValueChangedInEditor(self);
+            self.validate = _common.validateEditorForColumn(self);
 
-            this.init();
+            self.init();
         };
     };
 
-    _api.numberEditor = (options) => {
-        const numberEditorOptions = {
+    _api.numberEditor = function (options) {
+        var numberEditorOptions = {
             min: 0,
             max: 999,
-            decimalPlace: 0
+            decimalPlaces: 0
         };
         if (options) {
             numberEditorOptions.min = options.min !== undefined ? options.min : numberEditorOptions.min;
             numberEditorOptions.max = options.max !== undefined ? options.max : numberEditorOptions.max;
-            numberEditorOptions.decimalPlace = options.decimalPlace !== undefined ? options.decimalPlace : numberEditorOptions.decimalPlace;
+            numberEditorOptions.decimalPlaces = options.decimalPlaces !== undefined ? options.decimalPlaces : numberEditorOptions.decimalPlaces;
         }
-        numberEditorOptions.maxEditLength = numberEditorOptions.max.toString().length + (numberEditorOptions.decimalPlace > 0 ? (numberEditorOptions.decimalPlace + 1) : 0);
+        numberEditorOptions.maxEditLength = numberEditorOptions.max.toString().length + (numberEditorOptions.decimalPlaces > 0 ? (numberEditorOptions.decimalPlaces + 1) : 0);
 
-        return (args) => {
-            this.grid = args.grid;
-            this.column = args.column;
+        return function (args) {
+            var self = this;
+            self.grid = args.grid;
+            self.column = args.column;
             var $container = $(args.container);
 
-            this.interruptClickHandler = _common.interruptClickHandler();
-            this.init = () => {
-                this.$editor = $container.markup('textEditor', { maxLength: numberEditorOptions.maxEditLength }).i18n()
-                    .bind('keydown.nav', e => {
+            self.interruptClickHandler = _common.interruptClickHandler();
+            self.init = function () {
+                self.$editor = $container.markup("textEditor", {maxLength: numberEditorOptions.maxEditLength}).localize()
+                    .bind("keydown.nav", function (e) {
                         if (e.which === keys.LEFT || e.which === keys.RIGHT) {
                             e.stopImmediatePropagation();
                         }
                     })
-                    .bind('mousedown', this.interruptClickHandler)
+                    .bind("mousedown", self.interruptClickHandler)
                     .focus();
             };
-            this.destroy = _common.destroyEditor(this);
-            this.focus = _common.focusEditor(this);
-            this.getValue = _common.getEditorTextValue(this);
-            this.serializeValue = _common.getEditorTextValue(this);
-            this.setValue = (val) => {
-                this.$editor.val(val);
+            self.destroy = _common.destroyEditor(self);
+            self.focus = _common.focusEditor(self);
+            self.getValue = _common.getEditorTextValue(self);
+            self.serializeValue = _common.getEditorTextValue(self);
+            self.setValue = function (val) {
+                self.$editor.val(val);
             };
-            this.loadValue = (item) => {
-                const valAsInt = parseInt(item[this.column.field], 10);
-                this.defaultValue = !isNaN(valAsInt) ? valAsInt >= numberEditorOptions.min ? valAsInt : '-' : '-';
-                this.$editor.val(this.defaultValue);
-                this.$editor[0].defaultValue = this.defaultValue;
-                this.$editor.select();
+            self.loadValue = function (item) {
+                var valAsInt = parseInt(item[self.column.field], 10);
+                self.defaultValue = !isNaN(valAsInt) ? (valAsInt >= numberEditorOptions.min ? valAsInt : "-") : "-";
+                self.$editor.val(self.defaultValue);
+                self.$editor[0].defaultValue = self.defaultValue;
+                self.$editor.select();
             };
-            this.applyValue = (item, state) => {
+            self.applyValue = function (item, state) {
                 if (_common.isValidNumber(state, numberEditorOptions)) {
-                    item[this.column.field] = state;
+                    item[self.column.field] = state;
                 } else {
-                    item[this.column.field] = this.defaultValue;
+                    item[self.column.field] = self.defaultValue;
                 }
             };
-            this.save = () => {
+            self.save = function () {
                 args.commitChanges();
             };
-            this.cancel = () => {
-                this.$editor.val(this.defaultValue);
+            self.cancel = function () {
+                self.$editor.val(self.defaultValue);
                 args.cancelChanges();
             };
-            this.isValueChanged = _common.hasTextValueChangedInEditor(this);
-            this.validate = _common.validateEditorForColumn(this);
+            self.isValueChanged = _common.hasTextValueChangedInEditor(self);
+            self.validate = _common.validateEditorForColumn(self);
 
-            this.init();
+            self.init();
         };
     };
 
-    _api.longTextEditor = (maxLength, parentSelector) => {
-        const maxEditLengthOrFunction = maxLength || 999;
-        const $container = parentSelector ? $(parentSelector) : $('body');
+    _api.longTextEditor = function (maxLength, parentSelector) {
+        var maxEditLengthOrFunction = maxLength || 999;
+        var $container = parentSelector ? $(parentSelector) : $("body");
 
-        return (args) => {
-            this.grid = args.grid;
-            this.column = args.column;
+        return function (args) {
+            var self = this;
+            self.grid = args.grid;
+            self.column = args.column;
 
-            this.interruptClickHandler = _common.interruptClickHandler();
-            this.init = () => {
-                let maxEditLength;
-                if (typeof maxEditLengthOrFunction === 'function')
-                    maxEditLength = maxEditLengthOrFunction.call(this, args.item);
+            self.interruptClickHandler = _common.interruptClickHandler();
+            self.init = function () {
+                var maxEditLength;
+                if (typeof maxEditLengthOrFunction === "function")
+                    maxEditLength = maxEditLengthOrFunction.call(self, args.item);
                 else
                     maxEditLength = maxEditLengthOrFunction;
-                this.$wrapper = $container.markup('longTextEditor', { maxLength: maxEditLength }).i18n()
-                    .css('width', this.column.width);
-                this.$editor = $('TEXTAREA', this.$wrapper)
-                    .bind('keydown', _common.standardKeyHandler(this))
-                    .bind('keyup', () => {
-                        _common.ieMaxLengthFix(this.$editor[0]);
+                self.$wrapper = $container.markup("longTextEditor", {maxLength: maxEditLength}).localize()
+                    .css("width", self.column.width);
+                self.$editor = $("TEXTAREA", self.$wrapper)
+                    .bind("keydown", _common.standardKeyHandler(self))
+                    .bind("keyup", function () {
+                        _common.ieMaxLengthFix(self.$editor[0]);
                     })
-                    .bind('mousedown', this.interruptClickHandler)
-                    .focus()
-                    .select();
+                    .bind("mousedown", self.interruptClickHandler);
 
-                this.position(args.position);
+                self.position(args.position);
+                self.$wrapper.focus().select();
             };
-            this.save = () => {
+            self.save = function () {
                 args.commitChanges();
             };
-            this.cancel = () => {
-                this.$editor.val(this.defaultValue);
+            self.cancel = function () {
+                self.$editor.val(self.defaultValue);
                 args.cancelChanges();
             };
-            this.position = (position) => {
-                this.$wrapper
-                    .css('top', position.top - 1)
-                    .css('left', position.left - 1);
+            self.position = function (position) {
+                self.$wrapper
+                    .css("top", position.top - 1)
+                    .css("left", position.left - 1)
             };
-            this.hide = _common.hideEditorWrapper(this);
-            this.show = _common.showEditorWrapper(this);
-            this.destroy = _common.destroyEditorWrapper(this);
-            this.focus = _common.focusEditor(this);
-            this.loadValue = (item) => {
-                this.defaultValue = item[this.column.field];
-                this.$editor.val(this.defaultValue);
-                this.$editor.select();
+            self.hide = _common.hideEditorWrapper(self);
+            self.show = _common.showEditorWrapper(self);
+            self.destroy = _common.destroyEditorWrapper(self);
+            self.focus = _common.focusEditor(self);
+            self.loadValue = function (item) {
+                self.defaultValue = item[self.column.field];
+                self.$editor.val(self.defaultValue);
+                self.$editor.select();
             };
-            this.getValue = _common.getEditorTextValue(this);
-            this.serializeValue = _common.getEditorTextValue(this);
-            this.applyValue = _common.applyValue(this);
-            this.isValueChanged = _common.hasTextValueChangedInEditor(this);
-            this.validate = _common.validateEditorForColumn(this);
+            self.getValue = _common.getEditorTextValue(self);
+            self.serializeValue = _common.getEditorTextValue(self);
+            self.applyValue = _common.applyValue(self);
+            self.isValueChanged = _common.hasTextValueChangedInEditor(self);
+            self.validate = _common.validateEditorForColumn(self);
 
-            this.init();
-        };
+            self.init();
+        }
     };
 
-    _api.checkboxEditor = () => {
+    _api.checkboxEditor = function () {
 
-        return (args) => {
-            this.grid = args.grid;
-            this.column = args.column;
-            const $container = $(args.container);
+        return function (args) {
+            var self = this;
+            self.grid = args.grid;
+            self.column = args.column;
+            var $container = $(args.container);
 
-            this.init = () => {
-                this.$wrapper = $container.markup('checkboxEditor').i18n()
-                    .click(this.clickHandler.bind(this))
-                    .bind('keydown', this.keydownHandler.bind(this));
-                this.$editor = $('INPUT', this.$wrapper)
+            self.init = function () {
+                self.$wrapper = $container.markup("checkboxEditor").localize()
+                    .click(self.clickHandler.bind(self))
+                    .bind("keydown", self.keydownHandler.bind(self));
+                self.$editor = $("INPUT", self.$wrapper)
                     .focus();
             };
-            this.destroy = _common.destroyEditor(this);
-            this.focus = _common.focusEditor(this);
-            this.keydownHandler = (e) => {
+            self.destroy = _common.destroyEditor(self);
+            self.focus = _common.focusEditor(self);
+            self.keydownHandler = function (e) {
                 if (e.which == keys.SPACE) {
                     e.preventDefault();
-                    this.toggleCheckbox();
+                    self.toggleCheckbox();
                 }
             };
-            this.loadValue = (item) => {
-                this.defaultValue = item[this.column.field];
-                this.$editor.prop('checked', this.defaultValue);
+            self.loadValue = function (item) {
+                self.defaultValue = item[self.column.field];
+                self.$editor.prop('checked', self.defaultValue);
             };
-            this.serializeValue = () => {
-                return this.$editor.prop('checked');
+            self.serializeValue = function () {
+                return self.$editor.prop('checked');
             };
-            this.applyValue = _common.applyValue(this);
-            this.isValueChanged = () => {
-                return this.serializeValue() !== this.defaultValue;
+            self.applyValue = _common.applyValue(self);
+            self.isValueChanged = function () {
+                return (self.serializeValue() !== self.defaultValue);
             };
-            this.validate = _common.standardValidate();
-            this.clickHandler = (e) => {
+            self.validate = _common.standardValidate();
+            self.clickHandler = function (e) {
                 e.stopPropagation();
-                this.toggleCheckbox();
+                self.toggleCheckbox();
             };
-            this.toggleCheckbox = () => {
-                this.$editor.prop('checked', !this.$editor.prop('checked'));
+            self.toggleCheckbox = function () {
+                self.$editor.prop('checked', !self.$editor.prop('checked'));
             };
 
-            this.init();
-        };
+            self.init();
+        }
     };
 
     return _api;

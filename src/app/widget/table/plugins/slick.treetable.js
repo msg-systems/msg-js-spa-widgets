@@ -5,10 +5,11 @@
         var _handler = new Slick.EventHandler();
         var _defaults = {
             columnId: "_tree_toggler",
-            cssClass: null,
-            headerCssClass: null,
+            cssClass: "",
+            headerCssClass: "",
+            width: 24,
+            minWidth: 24,
             toolTip: "",
-            width: 30,
             focusable: false,
             //only has effect when RowMoveManager is activatet
             behavior: "selectAndMove",
@@ -65,6 +66,7 @@
         }
 
         function treeFormatter(row, cell, value, columnDef, dataContext) {
+            //TODO handle markups that come from concrete controller
             if (dataContext) {
                 var spacer = dataContext.level ? 10 * dataContext.level : 0;
                 if (!dataContext.isLeaf) {

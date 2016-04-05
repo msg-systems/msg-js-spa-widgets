@@ -40,6 +40,12 @@ interface:
         param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
                 Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events
                 Achtung: onBeforeMoveRows ist ein Event auf dem Slickgrid Plugin 'RowMoveManager' und nicht auf Slickgrid"
+      singleSelectOptions:
+        desc: ""
+        param: "Objekt"
+      multiSelectOptions:
+        desc: ""
+        param: "Objekt"
       setSelectedItems:
         desc: "Schickt der Slickgrid Tabelle die Anforderung die gegebenen Items als selektiert zu markieren"
         param: "Objekt oder Array von Tabellen Items"
@@ -136,6 +142,15 @@ interface:
           treeColumnWidth:
             desc: "Beinhaltet die Breite der Treetable Collapse/Expand Spalte. Diese wird dynamisch verbreitert."
             param: "number für die Breite in Pixeln"
+          singleSelectOptions:
+            desc: "Optionen inklusive dem Markup für Singel-Selekt"
+            param: "Objekt"
+          multiSelectOptions:
+            desc: "Optionen inklusive dem Markup für Multi-Selekt"
+            param: "Objekt"
+          treeOptions:
+            desc: "Optionen (Todo: Markup wie?) für eine Baumdarstellung"
+            param: "Objekt"
         event:
           selectedRowsChanged:
             desc: "Trigger wenn Tabellenselektionen verändert werden"

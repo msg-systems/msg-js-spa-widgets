@@ -64,10 +64,9 @@ ___config.package___.ctrl = ComponentJS.clazz({
             let options = this.model.value("data:tableOptions")
             if (options.activateSelectPlugIn) {
                 if (options.multiSelect) {
-                    //todo frage view nach dem markup, dann bracuht view aber einen register
-                    this.table.call("multiSelectMarkup", this.multiSelectMarkup())
+                    this.table.call("multiSelectOptions", this.multiSelectOptions())
                 } else {
-                    this.table.call("singleSelectMarkup", this.singleSelectMarkup())
+                    this.table.call("singleSelectOptions", this.singleSelectOptions())
                 }
             }
         },
@@ -181,21 +180,18 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         // has to be overwritten of the concrete controller
-        // must return an html fragment
-        multiSelectMarkup () {
-            throw "Please overwrite the method 'multiSelectMarkup' in the concrete table: " + ComponentJS(this).name()
+        multiSelectOptions () {
+            throw "Please overwrite the method 'multiSelectOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
-        // must return an html fragment
-        singleSelectMarkup () {
-            throw "Please overwrite the method 'singleSelectMarkup' in the concrete table: " + ComponentJS(this).name()
+        singleSelectOptions () {
+            throw "Please overwrite the method 'singleSelectOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
-        // must return an html fragment
-        treeMarkup () {
-            throw "Please overwrite the method 'treeMarkup' in the concrete table: " + ComponentJS(this).name()
+        treeOptions () {
+            throw "Please overwrite the method 'treeOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         //can be overwritten of the concrete controller
@@ -519,7 +515,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         /**
-         * Diese Methode muss immer überschrieben werden
+         * Diese Methode muss immer überschrieben werden, wenn die Tabelle die Selektion aktiviert hat
          * wird eine selection übergeben wird diese gesetzt
          * wird kein parameter übergeben wird der model Wert zurückgegeben
          */

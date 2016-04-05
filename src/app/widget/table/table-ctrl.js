@@ -125,16 +125,23 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "singleSelectMarkup", spool: "created",
-                func: singleSelectMarkup => {
-                    this.model.value("data:singleSelectMarkup", singleSelectMarkup)
+                name: "singleSelectOptions", spool: "created",
+                func: singleSelectOptions => {
+                    this.model.value("data:singleSelectOptions", singleSelectOptions)
                 }
             })
 
             ComponentJS(this).register({
-                name: "multiSelectMarkup", spool: "created",
-                func: multiSelectMarkup => {
-                    this.model.value("data:multiSelectMarkup", multiSelectMarkup)
+                name: "multiSelectOptions", spool: "created",
+                func: multiSelectOptions => {
+                    this.model.value("data:multiSelectOptions", multiSelectOptions)
+                }
+            })
+
+            ComponentJS(this).register({
+                name: "treeOptions", spool: "created",
+                func: treeOptions => {
+                    this.model.value("data:treeOptions", treeOptions)
                 }
             })
 

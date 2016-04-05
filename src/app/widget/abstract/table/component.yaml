@@ -33,14 +33,14 @@ interface:
         part: "widget-table"
         desc: "Übergibt den Tabellenwidget das Grouping-Plugin"
         param: "SlickGrid Plugin"
-      multiSelectMarkup:
+      multiSelectOptions:
         part: "widget-table"
-        dssc: "Übergibt der Tabelle das Markup für die Spalte für Multi-Select"
-        param: "HTML-Markup"
-      singleSelectMarkup:
+        dssc: "Übergibt der Tabelle die Optionen inklusive dem Markup für die Spalte für Multi-Select"
+        param: "Objekt"
+      singleSelectOptions:
         part: "widget-table"
-        dssc: "Übergibt der Tabelle das Markup für die Spalte für Single-Select"
-        param: "HTML-Markup"
+        dssc: "Übergibt der Tabelle die Optionen inklusive dem Markup für die Spalte für Single-Select"
+        param: "Objekt"
       changeRowCount:
         part: "widget-table"
         desc: "Gibt der Tabelle die Info, dass sich der Row Count geändert hat"

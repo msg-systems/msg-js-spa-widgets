@@ -7,17 +7,21 @@
         var _selectedRowsLookup = {};
         var _defaults = {
             columnId: "_checkbox_selector",
-            cssClass: null,
-            headerCssClass: null,
-            toolTip: "Select/Deselect All",
-            width: 30
+            cssClass: "centerColumn singleSelect",
+            headerCssClass: "centerColumn singleSelect",
+            width: 24,
+            minWidth: 24,
+            toolTip: "Select/Deselect All"
         };
 
         var _options = $.extend(true, {}, _defaults, options);
 
-        var uncheckedMarkup = $("<div />").append(markup.uncheckedMarkup).html();
-        var checkedMarkup = $("<div />").append(markup.checkedMarkup).html();
-
+        var uncheckedMarkup = "";
+        var checkedMarkup = "";
+        if (_options.markups && _options.markups.uncheckedMarkup && _options.markups.checkedMarkup) {
+            uncheckedMarkup = $("<div />").append(_options.markups.uncheckedMarkup).html();
+            checkedMarkup = $("<div />").append(_options.markups.checkedMarkup).html();
+        }
         function init(grid) {
             _grid = grid;
             _handler
