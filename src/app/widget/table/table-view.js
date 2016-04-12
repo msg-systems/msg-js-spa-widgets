@@ -415,6 +415,8 @@ ___config.package___.view = ComponentJS.clazz({
                     if (!this.registeredPlugins[pluginKey]) {
                         this.grid.registerPlugin(plugin)
                         this.registeredPlugins[pluginKey] = true
+                    } else {
+                        plugin.init(this.grid)
                     }
                 } else {
                     this.grid.unregisterPlugin(plugin)
