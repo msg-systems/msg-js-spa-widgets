@@ -12,8 +12,10 @@ ___config.package___.view = ComponentJS.clazz({
         interruptCallback: null,
         clickOutsideCallback: null,
         interruptClickOutside: false,
-
-        functionalColumns: []
+        onBeforeMoveRows: null,
+        onMoveRows: null,
+        rowSelectionModel: null,
+        registeredPlugins: {}
     },
     protos: {
 
@@ -38,7 +40,6 @@ ___config.package___.view = ComponentJS.clazz({
             $('body').unbind("mousedown", this.clickOutsideCallback);
             this.grid.destroy();
             this.grid = null;
-            this.functionalColumns = [];
         },
 
         prepareMaskReferences () {
@@ -151,24 +152,27 @@ ___config.package___.view = ComponentJS.clazz({
             ComponentJS(this).observe({
                 name: "data:columns", spool: "materialized",
                 func: (ev, columns) => {
-                    let cols = columns;
-                    if (this.functionalColumns) cols = this.functionalColumns.concat(columns);
+                    let cols = this.functionalColumns().concat(columns);
                     this.grid.setColumns(cols);
                     this.grid.render();
-                    this.disableSlickevents = true;
-                    this.grid.setSelectedRows(this.grid.getSelectedRows());
-                    this.disableSlickevents = false;
+                    if (ComponentJS(this).value("data:options").activateRowSelectionModel) {
+                        this.disableSlickevents = true;
+                        this.grid.setSelectedRows(this.grid.getSelectedRows());
+                        this.disableSlickevents = false;
+                    }
                     this.registerAdditionalSlickEvents();
                 }
             });
 
 
             ComponentJS(this).observe({
-                name: "data:options", spool: "materialized",
+                name: "data:options", spool: "materialized", op: "changed",
                 func: (ev, options) => {
-                    this.grid.setOptions(options);
-                    this.grid.render();
-                    this.registerAdditionalSlickEvents();
+                    this.grid.setOptions(options)
+                    this.registerPlugins(options)
+                    this.grid.invalidate()
+                    this.registerAdditionalSlickEvents()
+                    ComponentJS(this).touch("data:columns")
                 }
             });
 
@@ -200,7 +204,6 @@ ___config.package___.view = ComponentJS.clazz({
                     cellId: cellId
                 };
                 ComponentJS(this).value("event:cellClicked", obj, true);
-                e.stopPropagation();
             });
 
             this.grid.onScroll.subscribe(() => {
@@ -251,7 +254,6 @@ ___config.package___.view = ComponentJS.clazz({
             });
 
             this.grid.onActiveCellChanged.subscribe((e, args) => {
-                e.stopPropagation();
                 let obj = {};
                 if (args && args.cell >= 0 && args.row >= 0) {
                     obj = {
@@ -326,63 +328,106 @@ ___config.package___.view = ComponentJS.clazz({
         },
 
         prepareTableRendering () {
-            let columns = ComponentJS(this).value("data:columns");
-            let options = ComponentJS(this).value("data:options");
-            let checkboxSelector, treeToggler;
-            if (options.activateSelectPlugIn) {
-                if (options.multiSelect) {
-                    checkboxSelector = new Slick.MultiSelect(ComponentJS(this).value("data:multiSelectOptions"));
-                } else {
-                    checkboxSelector = new Slick.SingleSelect(ComponentJS(this).value("data:singleSelectOptions"));
-                }
-                this.functionalColumns.push(checkboxSelector.getColumnDefinition());
-            }
+            let columns = ComponentJS(this).value("data:columns")
+            let options = ComponentJS(this).value("data:options")
 
-            if (options.activateTreeTableFunctionality) {
-                treeToggler = new Slick.TreeTable(ComponentJS(this).value("data:treeOptions"));
-                this.functionalColumns.push(treeToggler.getColumnDefinition());
-            }
-
-            columns = this.functionalColumns.concat(columns);
+            columns = this.functionalColumns().concat(columns)
 
             // Pass the DataView as a data provider to SlickGrid.
             let data = ComponentJS(this).value("data:dataView") || ComponentJS(this).value("data:data");
             this.grid = new Slick.Grid(this.ui, data, columns, options);
 
-            if (options.activateRowSelectionModel) {
-                let rowSelectOptions = {};
-                if (options.activateSelectPlugIn) {
-                    rowSelectOptions.selectActiveRow = false;
-                }
-                this.grid.setSelectionModel(new Slick.RowSelectionModel(rowSelectOptions));
-            }
+            this.grid.registerPlugin(new Slick.AutoTooltips())
+            this.rowSelectionModel = new Slick.RowSelectionModel()
+            this.registerPlugins(options)
+        },
 
+        functionalColumns () {
+            let options = ComponentJS(this).value("data:options")
+            let functionalColumns = []
+            let checkboxSelector, treeToggler
             if (options.activateSelectPlugIn) {
-                this.grid.registerPlugin(checkboxSelector);
+                if (options.multiSelect) {
+                    checkboxSelector = ComponentJS(this).value("data:multiSelectPlugin")
+                } else {
+                    checkboxSelector = ComponentJS(this).value("data:singleSelectPlugin")
+                }
+                if (checkboxSelector)
+                    functionalColumns.push(checkboxSelector.getColumnDefinition())
             }
 
             if (options.activateTreeTableFunctionality) {
-                this.grid.registerPlugin(treeToggler);
+                treeToggler = ComponentJS(this).value("data:treePlugin")
+                functionalColumns.push(treeToggler.getColumnDefinition())
+            }
+            return functionalColumns
+        },
+
+        registerPlugins (options) {
+
+            // R O W   S E L E C T I O N
+            if (options.activateRowSelectionModel) {
+                this.grid.setSelectionModel(this.rowSelectionModel)
+            } else {
+                if (this.grid.getSelectionModel())
+                    this.resetRowSelection()
+                this.grid.setSelectionModel()
             }
 
-            if (options.activateGrouping) {
-                this.grid.registerPlugin(ComponentJS(this).value("data:groupItemMetadataProvider"));
+            // S E L E C T I O N   O V E R   S E P A R A T E   C O L U M N
+            let checkboxSelector, pluginKey
+            if (options.multiSelect) {
+                checkboxSelector = ComponentJS(this).value("data:multiSelectPlugin")
+                pluginKey = "multiSelectPlugin"
+            } else {
+                checkboxSelector = ComponentJS(this).value("data:singleSelectPlugin")
+                pluginKey = "singleSelectPlugin"
             }
+            this.updatePlugin(checkboxSelector, pluginKey, options.activateSelectPlugIn)
 
-            if (options.activateRowMoveManager) {
-                let rowMoveManager = new Slick.RowMoveManager({
-                    cancelEditOnDrag: true
-                });
-                this.grid.registerPlugin(rowMoveManager);
-                this.registerRowMoveManagerEvents(rowMoveManager)
+
+            // T R E E - T A B L E
+            this.updatePlugin(ComponentJS(this).value("data:treePlugin"), "treePlugin", options.activateTreeTableFunctionality)
+
+
+            // G R O U P I N G   A C T I V A T E D
+            this.updatePlugin(ComponentJS(this).value("data:groupItemMetadataProvider"), "groupPlugin", options.activateGrouping)
+
+
+            // R O W   M O V E   A C T I V A T E D
+            let rowMoveManager = ComponentJS(this).value("data:rowMovePlugin")
+            if (rowMoveManager) {
+                if (options.activateRowMoveManager) {
+                    if (!this.registeredPlugins["rowMovePlugin"]) {
+                        this.grid.registerPlugin(rowMoveManager);
+                        this.registerRowMoveManagerEvents(rowMoveManager)
+                        this.registeredPlugins["rowMovePlugin"] = true
+                    }
+                } else {
+                    this.unregisterRowMoveManagerEvents(rowMoveManager)
+                    this.grid.unregisterPlugin(rowMoveManager)
+                    delete this.registeredPlugins["rowMovePlugin"]
+                }
             }
+        },
 
-            this.grid.registerPlugin(new Slick.AutoTooltips())
+        updatePlugin (plugin, pluginKey, option) {
+            if (plugin) {
+                if (option) {
+                    if (!this.registeredPlugins[pluginKey]) {
+                        this.grid.registerPlugin(plugin)
+                        this.registeredPlugins[pluginKey] = true
+                    }
+                } else {
+                    this.grid.unregisterPlugin(plugin)
+                    delete this.registeredPlugins[pluginKey]
+                }
+            }
         },
 
         registerRowMoveManagerEvents (rowMoveManager) {
 
-            rowMoveManager.onBeforeMoveRows.subscribe((e, data) => {
+            this.onBeforeMoveRows = (e, data) => {
                 for (let i = 0; i < data.rows.length; i++) {
                     // no point in moving before or after itthis
                     if (data.rows[i] == data.insertBefore || data.rows[i] == data.insertBefore - 1) {
@@ -391,15 +436,24 @@ ___config.package___.view = ComponentJS.clazz({
                     }
                 }
                 return this.onBeforeMoveRowsCallback(e, data);
-            });
+            }
 
-            rowMoveManager.onMoveRows.subscribe((e, args) => {
+            rowMoveManager.onBeforeMoveRows.subscribe(this.onBeforeMoveRows.bind(this))
+
+            this.onMoveRows = (e, args) => {
                 let obj = {
                     rows: args.rows,
                     insertBefore: args.insertBefore
                 };
-                ComponentJS(this).value("event:rowsMoved", obj, true);
-            });
+                ComponentJS(this).value("event:rowsMoved", obj, true)
+            }
+
+            rowMoveManager.onMoveRows.subscribe(this.onMoveRows.bind(this))
+        },
+
+        unregisterRowMoveManagerEvents (rowMoveManager) {
+            rowMoveManager.onBeforeMoveRows.unsubscribe(this.onBeforeMoveRows)
+            rowMoveManager.onMoveRows.unsubscribe(this.onMoveRows)
         },
 
         resetRowSelection () {

@@ -57,7 +57,12 @@ ___config.package___.ctrl = ComponentJS.clazz({
             ComponentJS(this).register({
                 name: "setTableOptions", spool: "created",
                 func: options => {
-                    this.model.value("data:options", options)
+                    if (options.activateRowMoveManager && !this.model.value("data:rowMovePlugin")) {
+                        this.model.value("data:rowMovePlugin", new Slick.RowMoveManager({
+                            cancelEditOnDrag: true
+                        }))
+                    }
+                    this.model.value("data:options", options, true)
                 }
             })
 
@@ -125,23 +130,26 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "singleSelectOptions", spool: "created",
-                func: singleSelectOptions => {
-                    this.model.value("data:singleSelectOptions", singleSelectOptions)
+                name: "singleSelectPluginOptions", spool: "created",
+                func: singleSelectPluginOptions => {
+                    let singleSelectPlugin = new Slick.SingleSelect(singleSelectPluginOptions)
+                    this.model.value("data:singleSelectPlugin", singleSelectPlugin)
                 }
             })
 
             ComponentJS(this).register({
-                name: "multiSelectOptions", spool: "created",
-                func: multiSelectOptions => {
-                    this.model.value("data:multiSelectOptions", multiSelectOptions)
+                name: "multiSelectPluginOptions", spool: "created",
+                func: multiSelectPluginOptions => {
+                    let multiSelectPlugin = new Slick.MultiSelect(multiSelectPluginOptions)
+                    this.model.value("data:multiSelectPlugin", multiSelectPlugin)
                 }
             })
 
             ComponentJS(this).register({
-                name: "treeOptions", spool: "created",
-                func: treeOptions => {
-                    this.model.value("data:treeOptions", treeOptions)
+                name: "treePluginOptions", spool: "created",
+                func: treePluginOptions => {
+                    let treePlugin = new Slick.TreeTable(treePluginOptions)
+                    this.model.value("data:treePlugin", treePlugin)
                 }
             })
 

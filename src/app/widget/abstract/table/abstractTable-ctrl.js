@@ -61,14 +61,8 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 this.table.call("setGroupItemMetadataProvider", this.groupItemMetadataProvider)
             }
 
-            let options = this.model.value("data:tableOptions")
-            if (options.activateSelectPlugIn) {
-                if (options.multiSelect) {
-                    this.table.call("multiSelectOptions", this.multiSelectOptions())
-                } else {
-                    this.table.call("singleSelectOptions", this.singleSelectOptions())
-                }
-            }
+            this.table.call("multiSelectPluginOptions", this.multiSelectPluginOptions())
+            this.table.call("singleSelectPluginOptions", this.singleSelectPluginOptions())
         },
 
         prepare () {
@@ -180,18 +174,18 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         // has to be overwritten of the concrete controller
-        multiSelectOptions () {
-            throw "Please overwrite the method 'multiSelectOptions' in the concrete table: " + ComponentJS(this).name()
+        multiSelectPluginOptions () {
+            throw "Please overwrite the method 'multiSelectPluginOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
-        singleSelectOptions () {
-            throw "Please overwrite the method 'singleSelectOptions' in the concrete table: " + ComponentJS(this).name()
+        singleSelectPluginOptions () {
+            throw "Please overwrite the method 'singleSelectPluginOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
-        treeOptions () {
-            throw "Please overwrite the method 'treeOptions' in the concrete table: " + ComponentJS(this).name()
+        treePluginOptions () {
+            throw "Please overwrite the method 'treePluginOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         //can be overwritten of the concrete controller

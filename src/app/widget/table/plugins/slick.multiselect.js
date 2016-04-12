@@ -1,6 +1,6 @@
 (function ($) {
 
-    var MultiSelect = function (options, markup) {
+    var MultiSelect = function (options) {
         var _grid;
         //var _self = this;
         var _handler = new Slick.EventHandler();

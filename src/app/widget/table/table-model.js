@@ -77,15 +77,6 @@ ___config.package___.model = ComponentJS.clazz({
         "formattedSortValue?: any, " +
             // JHO: the rest here must be eliminated
         "tableDroppable?: boolean, " +
-        "}",
-        pluginOptionFormat: "{ " +
-        "markups?: any, " +
-        "width?: number, " +
-        "minWidth?: number, " +
-        "maxWidth?: number, " +
-        "toolTip?: string, " +
-        "cssClass?: string, " +
-        "headerCssClass?: string, " +
         "}"
     },
     protos: {
@@ -99,9 +90,10 @@ ___config.package___.model = ComponentJS.clazz({
                 "data:selectedCell": {value: null, valid: "object"},
                 "data:selectedItems": {value: [], valid: "[object*]"},
                 "data:treeColumnWidth": {value: 0, valid: "number"},
-                "data:singleSelectOptions": {value: null, valid: this.pluginOptionFormat},
-                "data:multiSelectOptions": {value: null, valid: this.pluginOptionFormat},
-                "data:treeOptions": {value: null, valid: this.pluginOptionFormat},
+                "data:singleSelectPlugin": {value: null, valid: "object"},
+                "data:multiSelectPlugin": {value: null, valid: "object"},
+                "data:treePlugin": {value: null, valid: "object"},
+                "data:rowMovePlugin": {value: null, valid: "object"},
                 "event:selectedRowsChanged": {value: [], valid: "[object*]", autoreset: true},
                 "event:cellClicked": {value: null, valid: "object", autoreset: true},
                 "event:dataChanged": {value: {}, valid: "object", autoreset: true},
