@@ -14,7 +14,6 @@ ___config.package___.view = ComponentJS.clazz({
         interruptClickOutside: false,
         onBeforeMoveRows: null,
         onMoveRows: null,
-        rowSelectionModel: null,
         registeredPlugins: {}
     },
     protos: {
@@ -338,7 +337,6 @@ ___config.package___.view = ComponentJS.clazz({
             this.grid = new Slick.Grid(this.ui, data, columns, options);
 
             this.grid.registerPlugin(new Slick.AutoTooltips())
-            this.rowSelectionModel = new Slick.RowSelectionModel()
             this.registerPlugins(options)
         },
 
@@ -367,7 +365,7 @@ ___config.package___.view = ComponentJS.clazz({
 
             // R O W   S E L E C T I O N
             if (options.activateRowSelectionModel) {
-                this.grid.setSelectionModel(this.rowSelectionModel)
+                this.grid.setSelectionModel(new Slick.RowSelectionModel({selectActiveRow: options.activateSelectPlugIn ? options.selectActiveRow : true}))
             } else {
                 if (this.grid.getSelectionModel())
                     this.resetRowSelection()

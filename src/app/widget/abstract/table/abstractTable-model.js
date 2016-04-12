@@ -34,13 +34,15 @@ ___config.package___.model = ComponentJS.clazz({
 
         initializeOptions () {
             this.options = {
-                multiSelect: false,
                 rowHeight: 27,
                 enableColumnReorder: false,
                 forceFitColumns: true,
                 editable: false,
+                activateRowSelectionModel: true,
+                selectActiveRow: true,
                 activateSelectPlugIn: false,
-                activateRowSelectionModel: true
+                multiSelect: false
+
             };
         },
 

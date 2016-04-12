@@ -25,8 +25,11 @@
             _grid = grid;
             _handler
                 .subscribe(_grid.onSelectedRowsChanged, handleSelectedRowsChanged)
-                .subscribe(_grid.onClick, handleClick)
-                .subscribe(_grid.onKeyDown, handleKeyDown);
+            if (!grid.getOptions().selectActiveRow) {
+                _handler
+                    .subscribe(_grid.onClick, handleClick)
+                    .subscribe(_grid.onKeyDown, handleKeyDown)
+            }
         }
 
         function destroy() {
@@ -66,8 +69,7 @@
 
         function handleClick(e, args) {
             // clicking on a row select checkbox
-            var isRightColumn = _grid.getColumns()[args.cell].id === _options.columnId;
-            if ((_grid.getOptions().activateGrouping ? !$(e.target).hasClass("pscGroupToggle") : true) && isRightColumn) {
+            if (_grid.getColumns()[args.cell].id === _options.columnId) {
                 // if editing, try to commit
                 if (_grid.getEditorLock().isActive() && !_grid.getEditorLock().commitCurrentEdit()) {
                     e.preventDefault();
