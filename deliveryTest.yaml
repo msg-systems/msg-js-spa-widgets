@@ -1,0 +1,28 @@
+##
+##  msg JavaScript Single Page App Widgets - deliveryPacker config file
+##  Design and Development by msg Applied Technology Research and GB P
+##  Copyright (c) 2016 msg systems ag (http://www.msg-systems.com/)
+##
+import:
+- delivery.yaml
+build:
+- spa.widget.bootstrap
+- spa.widget.bootstrap.affix
+- spa.widget.bootstrap.alert
+- spa.widget.bootstrap.button
+- spa.widget.bootstrap.carousel
+- spa.widget.bootstrap.collapse
+- spa.widget.bootstrap.dropdown
+- spa.widget.bootstrap.modal
+- spa.widget.bootstrap.popover
+- spa.widget.bootstrap.scrollspy
+- spa.widget.bootstrap.tab
+- spa.widget.bootstrap.tooltip
+- spa.widget.bootstrap.transition
+- spa.widget.bootstrap.datepicker
+- spa.widget.select2
+- spa.widget.slickGrid.core
+- spa.widget.slickGrid.dataView
+- spa.widget.slickGrid.editor
+- spa.widget.slickGrid.componentjsWrapper
+- spa.widget.vis

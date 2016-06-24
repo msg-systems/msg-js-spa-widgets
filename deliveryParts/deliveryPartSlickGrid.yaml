@@ -1,6 +1,7 @@
 register:
   spa.widget.slickGrid.core:
     JS:
+    - ../node_modules/jquery.event.drag/jquery.event.drag.js
     - ../lib/slickgrid/slick.core.js
     - ../lib/slickgrid/slick.grid.js
     - ../lib/slickgrid/slick.groupitemmetadataprovider.js
