@@ -2,7 +2,7 @@
     "name": "msg-js-spa-widgets",
     "homepage": "https://github.com/msg-systems/msg-js-spa-widgets",
     "description": "Single Page Application Widgets",
-    "version": "0.1.15",
+    "version": "0.1.16",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -25,11 +25,10 @@
         "prepublish": "grunt"
     },
     "dependencies": {
-        "select2":                  "4.0.3",
+        "select2":                  "3.5.1",
         "vis":                      "4.16.1",
         "bootstrap":                "3.3.6",
-        "bootstrap-datepicker":     "1.6.1",
-        "jquery.event.drag":        "2.2.2"
+        "bootstrap-datepicker":     "1.6.1"
     },
     "devDependencies": {
         "load-grunt-tasks":         "3.5.0",

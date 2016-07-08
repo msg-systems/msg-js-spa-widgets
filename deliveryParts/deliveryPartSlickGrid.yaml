@@ -1,13 +1,12 @@
 register:
   spa.widget.slickGrid.core:
     JS:
-    - ../node_modules/jquery.event.drag/jquery.event.drag.js
+    - ../lib/slickgrid/lib/jquery.event.drag-2.2.js
+    - ../lib/slickgrid/lib/jquery.event.drop-2.2.js
+    - ../lib/slickgrid/lib/jquery-ui-1.8.16.custom.min.js
     - ../lib/slickgrid/slick.core.js
     - ../lib/slickgrid/slick.grid.js
     - ../lib/slickgrid/slick.groupitemmetadataprovider.js
-    - ../lib/slickgrid/plugins/slick.rowselectionmodel.js
-    - ../lib/slickgrid/plugins/slick.rowmovemanager.js
-    - ../lib/slickgrid/plugins/slick.checkboxselectcolumn.js
     - ../lib/slickgrid/plugins/slick.autotooltips.js
     CSS:
     - name: ../lib/slickgrid/slick.grid.css
@@ -24,13 +23,27 @@ register:
     JS:
     - ../lib/slickgrid/slick.dataview.js
     - ../dist/app/widget/_trait/dataView/dataView-ctrl.js
+  spa.widget.slickGrid.formatters:
+    JS:
+    - ../lib/slickgrid/slick.formatters.js
   spa.widget.slickGrid.editor:
     JS:
+    - ../dist/app/widget/table/editor/abstractEditor.js
+    - ../dist/app/widget/table/editor/textEditor/textEditor.js
+    - ../dist/app/widget/table/editor/numberEditor/numberEditor.js
+    - ../dist/app/widget/table/editor/checkboxEditor/checkboxEditor.js
+    - ../dist/app/widget/table/editor/longTextEditor/longTextEditor.js
     - ../dist/app/widget/table/editor/tableEditor.js
     CSS:
-    - ../dist/app/widget/table/editor/tableEditor.css
+    - ../dist/app/widget/table/editor/textEditor/textEditor.css
+    - ../dist/app/widget/table/editor/numberEditor/numberEditor.css
+    - ../dist/app/widget/table/editor/checkboxEditor/checkboxEditor.css
+    - ../dist/app/widget/table/editor/longTextEditor/longTextEditor.css
     MARKUP:
-    - ../dist/app/widget/table/editor/tableEditor.html
+    - ../dist/app/widget/table/editor/textEditor/textEditor.html
+    - ../dist/app/widget/table/editor/numberEditor/numberEditor.html
+    - ../dist/app/widget/table/editor/checkboxEditor/checkboxEditor.html
+    - ../dist/app/widget/table/editor/longTextEditor/longTextEditor.html
   spa.widget.slickGrid.componentjsWrapper:
     JS:
     - ../lib/slickgrid/slick.dataview.js
@@ -41,9 +54,44 @@ register:
     - ../dist/app/widget/abstract/table/abstractTable-ctrl.js
     - ../dist/app/widget/abstract/table/abstractTable-model.js
     - ../dist/app/widget/abstract/table/abstractTable-view.js
-    - ../dist/app/widget/table/plugins/slick.singleselect.js
-    - ../dist/app/widget/table/plugins/slick.multiselect.js
     CSS:
     - ../dist/app/widget/table/table.css
     MARKUP:
     - ../dist/app/widget/table/table.html
+  spa.widget.slickGrid.plugin.cellcopymanager:
+    JS:
+    - ../lib/slickgrid/plugins/slick.cellcopymanager.js
+  spa.widget.slickGrid.plugin.cellrangedecorator:
+    JS:
+    - ../lib/slickgrid/plugins/slick.cellrangedecorator.js
+  spa.widget.slickGrid.plugin.cellrangeselector:
+    JS:
+    - ../lib/slickgrid/plugins/slick.cellrangeselector.js
+  spa.widget.slickGrid.plugin.cellselectionmodel:
+    JS:
+    - ../lib/slickgrid/plugins/slick.cellselectionmodel.js
+  spa.widget.slickGrid.plugin.checkboxselectcolumn:
+    JS:
+    - ../lib/slickgrid/plugins/slick.checkboxselectcolumn.js
+  spa.widget.slickGrid.plugin.headerbuttons:
+    JS:
+    - ../lib/slickgrid/plugins/slick.headerbuttons.js
+    CSS:
+    - ../lib/slickgrid/plugins/slick.headerbuttons.css
+  spa.widget.slickGrid.plugin.headermenu:
+    JS:
+    - ../lib/slickgrid/plugins/slick.headermenu.js
+    CSS:
+    - ../lib/slickgrid/plugins/slick.headermenu.css
+  spa.widget.slickGrid.plugin.rowmovemanager:
+    JS:
+    - ../lib/slickgrid/plugins/slick.rowmovemanager.js
+  spa.widget.slickGrid.plugin.rowselectionmodel:
+    JS:
+    - ../lib/slickgrid/plugins/slick.rowselectionmodel.js
+  spa.widget.slickGrid.plugin.singleselect:
+    JS:
+    - ../dist/app/widget/table/plugins/slick.singleselect.js
+  spa.widget.slickGrid.plugin.multiselect:
+    JS:
+    - ../dist/app/widget/table/plugins/slick.multiselect.js

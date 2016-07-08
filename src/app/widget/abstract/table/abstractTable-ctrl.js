@@ -29,6 +29,14 @@ ___config.package___.ctrl = ComponentJS.clazz({
             this.base(modelClazz, viewClazz)
             this.createTable()
 
+            if (this.hasGrouping) {
+                this.model.value("data:tableOptions.activateGrouping", true)
+            }
+            if (this.isTreeTable) {
+                this.model.value("data:tableOptions.activateTreeTableFunctionality", true)
+            }
+            this.isTree = this.isTreeTable
+
             this.registerAPI("changeCollapsedStates", collapsed => {
                 if (this.isFunction(this.updateCollapsedStateOfAllItemsTo))
                     this.updateCollapsedStateOfAllItemsTo(collapsed)
@@ -37,14 +45,6 @@ ___config.package___.ctrl = ComponentJS.clazz({
             this.registerAPI("invalidate", () => {
                 this.table.call("resizeGrid")
             })
-
-            if (this.hasGrouping) {
-                this.model.value("data:tableOptions.activateGrouping", true)
-            }
-            if (this.isTreeTable) {
-                this.model.value("data:tableOptions.activateTreeTableFunctionality", true)
-            }
-            this.isTree = this.isTreeTable
         },
 
         setup () {
@@ -61,8 +61,14 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 this.table.call("setGroupItemMetadataProvider", this.groupItemMetadataProvider)
             }
 
-            this.table.call("multiSelectPluginOptions", this.multiSelectPluginOptions())
-            this.table.call("singleSelectPluginOptions", this.singleSelectPluginOptions())
+            let tableOptions = this.model.value("data:tableOptions")
+            if (tableOptions.activateSelectPlugIn || tableOptions.activateRowSelectionModel) {
+                if (tableOptions.multiSelect) {
+                    this.table.call("multiSelectPluginOptions", this.multiSelectPluginOptions())
+                } else {
+                    this.table.call("singleSelectPluginOptions", this.singleSelectPluginOptions())
+                }
+            }
         },
 
         prepare () {
