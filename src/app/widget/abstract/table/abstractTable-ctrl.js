@@ -160,6 +160,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         teardown () {
+            this.base()
             this.model.value("data:activeCellsPresentationEntry", {})
         },
 
@@ -253,11 +254,11 @@ ___config.package___.ctrl = ComponentJS.clazz({
             return pTreeEntry
         },
 
-        updatePresentationTableEntries (newEntities, oldEntities) {
+        updatePresentationTableEntries (newEntities, oldEntities, force) {
             let existingEntitiesAsItems = _.map(this.items(), "entity")
-            if (newEntities !== oldEntities ||
+            if (force || (newEntities !== oldEntities ||
                 ((newEntities && newEntities.length > 0) && this.items().length === 0) ||
-                ((!newEntities || newEntities.length === 0) && this.items().length > 0)) {
+                ((!newEntities || newEntities.length === 0) && this.items().length > 0))) {
                 //RESET or newly SET
                 this.items(this.generatePresentationTableEntries(newEntities))
                 this.model.touch("data:sortObject")
@@ -332,7 +333,6 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
         },
 
-        // can be overwritten by concrete table controller
         itemsToUpdate (item, entity) {
             return {item: item, entity: entity}
         },

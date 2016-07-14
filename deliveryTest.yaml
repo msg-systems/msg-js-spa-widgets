@@ -20,6 +20,7 @@ build:
 - spa.widget.bootstrap.tooltip
 - spa.widget.bootstrap.transition
 - spa.widget.bootstrap.datepicker
+- spa.widget.bootstrap.timepicker
 - spa.widget.select2
 - spa.widget.slickGrid.core
 - spa.widget.slickGrid.dataView

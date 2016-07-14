@@ -50,3 +50,8 @@ register:
     - ../node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js
     CSS:
     - ../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css
+  spa.widget.bootstrap.timepicker:
+    JS:
+    - ../node_modules/bootstrap-timepicker/js/bootstrap-timepicker.js
+    CSS:
+    - ../node_modules/bootstrap-timepicker/css/bootstrap-timepicker.css
