@@ -73,11 +73,11 @@ ___config.package___.model = ComponentJS.clazz({
             // slickgrid internal fields used by slick during runtime
         "previousWidth?: number, " +
             //for searching and sorting it is sometimes neccassary to use formatted value, not the value of the entity directly
-            //e.g. when searching a date the user wnats to type 13.3. and not the milliseconds
-        "formattedSearchValue?: any, " +
-        "formattedSortValue?: any, " +
+            //e.g. when searching a date the user wants to type 13.03. and not the milliseconds
+        "useFormatterForSearch?: boolean, " +
+        "useFormatterForSort?: boolean, " +
             // JHO: the rest here must be eliminated
-        "tableDroppable?: boolean, " +
+        "tableDroppable?: boolean " +
         "}"
     },
     protos: {

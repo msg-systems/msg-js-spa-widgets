@@ -355,7 +355,8 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
         // can be overwritten of concrete controller
         tableEntryHasMatch (tableEntry, filterValue) {
-            filterValue = filterValue.trim().replace('?', '\\?').replace('$', '\\$')
+            // replace all for regular expressions reserved special character
+            filterValue = filterValue.trim().replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
             let filterValues = filterValue.split(" ")
             let matchesForValues = []
             let columns = this.model.value("data:tableColumns")
@@ -368,8 +369,8 @@ ___config.package___.ctrl = ComponentJS.clazz({
                     if (["entity"].indexOf(column.id) === -1) {
                         attrValue = tableEntry[column.field]
                         formattedAttr = attrValue
-                        if (column && column.formattedSearchValue && typeof column.formattedSearchValue === "function") {
-                            formattedAttr = column.formattedSearchValue(0, 0, attrValue, column, tableEntry)
+                        if (column && column.useFormatterForSearch && typeof column.formatter === "function") {
+                            formattedAttr = column.formatter(0, 0, attrValue, column, tableEntry)
                         }
                         if (typeof formattedAttr === "string") {
                             return formattedAttr.match(regEx) !== null
@@ -396,9 +397,9 @@ ___config.package___.ctrl = ComponentJS.clazz({
                     let sortFunction = (dataRow1, dataRow2) => {
                         let value1, value2
                         //only use formatted value, when column-option is set to that and a formatter function exists
-                        if (column && column.formattedSortValue && typeof column.formattedSortValue === "function") {
-                            value1 = column.formattedSortValue(0, 0, dataRow1[field], column, dataRow1)
-                            value2 = column.formattedSortValue(0, 0, dataRow2[field], column, dataRow2)
+                        if (column && column.useFormatterForSort && typeof column.formatter === "function") {
+                            value1 = column.formatter(0, 0, dataRow1[field], column, dataRow1)
+                            value2 = column.formatter(0, 0, dataRow2[field], column, dataRow2)
                         } else {
                             value1 = dataRow1[field]
                             value2 = dataRow2[field]

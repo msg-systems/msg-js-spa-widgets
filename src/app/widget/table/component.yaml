@@ -131,7 +131,12 @@ interface:
             desc: "Hält die Tabellendaten"
             param: "Array"
           columns:
-            desc: "Menge der Slickgrid Spaltendefinitionen"
+            desc: "Menge der Slickgrid Spaltendefinitionen. Die Standard Attribute von SLickGrid einer Spalten wurden mit folgenden erweitert:
+                  - useFormatterForSearch: boolean
+                  - useFormatterForSort: boolean
+                  - validator: object
+                  - previousWidth: number
+                  - tableDroppable: boolean"
             param: "Array von Objekten mit der Signatur - siehe table-model.js -> dynamics -> singleColumnFormat"
           options:
             desc: "Menge der Slickgrid Tabellen Optionen"
