@@ -7,46 +7,52 @@ desc: "Diese Komponenten kapselt den Umgang mit der Slickgrid Tabelle.
 interface:
   api:
     register:
-      setTableHeader:
+      "table:columns":
         desc: "Erlaubt das initiale Setzen der Tabellenspalten"
         param: "Ein Array von slickgrid columns.
                 Eine column muss dabei dem Format beschrieben im table-model.js -> dynamics -> singleColumnFormat folgen"
-      setTableOptions:
+      "table:options":
         desc: "Erlaubt das initiale Setzen der Tabellenoptionen"
         param: "Ein Object das dem beschriebenen Format im table-model.js -> dynamics -> optionsFormat folgt"
-      setTableData:
+      "table:data":
         desc: "Erlaubt das Setzen der DataView oder der Datenobjekten"
         param: "Ein SlickGrid DataView Objekt oder Array"
-      renderGrid:
+      "table:groupItemMetadataProvider":
+        desc: "Erlaubt das Setzen eines GroupItemMetadataProviders"
+        param: "object"
+      "table:render":
         desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuzeichnen"
-      resizeGrid:
+      "table:resize":
         desc: "Schickt der Slickgrid Tabelle die Anforderung zum Neuberechnen der Höhe, Breite und Spaltenbreiten"
-      changeRowCount:
+      "table:changeRowCount":
         desc: "Schickt der Slickgrid Tabelle die Anforderung den RowCount anzupassen und sich neu zu rendern"
-      changedRows:
+      "table:changedRows":
         desc: "Schickt der Slickgrid Tabelle die Anforderung sich zu invalidieren, neu zu rendern und die Selektion zu synchronisieren."
         param: "object"
-      scrollToIndex:
+      "table:scrollToIndex":
         desc: "Falls index 0 ist soll ganz nach oben gescrollte werden, ansonsten soll die Reihe in den Sichtbereich gescrollt werden."
         param: "number - Index der Reihe"
-      setOnBeforeEditCellCallback:
+      "table:setOnBeforeEditCellCallback":
         desc: "Erlaubt das Eingreifen in den Editiermechanismus. Eine Editierung kann damit verhindert werden.
                Es muss dabei eine Callback-Function übergeben werden."
         param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
                 Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events"
-      setOnBeforeMoveRowsCallback:
+      "table:setOnBeforeMoveRowsCallback":
         desc: "Erlaubt das Eingreifen in den Zeilenverschiebemechanismus des RowMoveManagers von Slickgrid.
                Es muss dabei eine Callback-Function übergeben werden."
         param: "Eine Function, die der vorgegebenen Signatur von Slickgrid entspricht.
                 Für Doku siehe: https://github.com/mleibman/SlickGrid/wiki/Grid-Events
                 Achtung: onBeforeMoveRows ist ein Event auf dem Slickgrid Plugin 'RowMoveManager' und nicht auf Slickgrid"
-      singleSelectOptions:
-        desc: ""
+      "table:singleSelectPluginOptions":
+        desc: "Setzt die Optionen für das SingleSelect Plugin"
         param: "Objekt"
-      multiSelectOptions:
-        desc: ""
+      "table:multiSelectPluginOptions":
+        desc: "Setzt die Optionen für das MultiSelect Plugin"
         param: "Objekt"
-      setSelectedItems:
+      "table:treePluginOptions":
+        desc: "Setzt die Optionen für das Tree Plugin"
+        param: "Objekt"
+      "table:selectedItems":
         desc: "Schickt der Slickgrid Tabelle die Anforderung die gegebenen Items als selektiert zu markieren"
         param: "Objekt oder Array von Tabellen Items"
   events:

@@ -27,7 +27,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             ComponentJS(this).property("ComponentJS:state-auto-increase", true)
 
             ComponentJS(this).register({
-                name: "setTableData", spool: "created",
+                name: "table:data", spool: "created",
                 func: data => {
                     if (Object.prototype.toString.call(data) === Object.prototype.toString.call([])) {
                         //check if data is an array, then we just have the single items in an array
@@ -41,21 +41,21 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "setGroupItemMetadataProvider", spool: "created",
+                name: "table:groupItemMetadataProvider", spool: "created",
                 func: groupItemMetadataProvider => {
                     this.model.value("data:groupItemMetadataProvider", groupItemMetadataProvider)
                 }
             })
 
             ComponentJS(this).register({
-                name: "setTableHeader", spool: "created",
+                name: "table:columns", spool: "created",
                 func: columns => {
                     this.model.value("data:columns", columns)
                 }
             })
 
             ComponentJS(this).register({
-                name: "setTableOptions", spool: "created",
+                name: "table:options", spool: "created",
                 func: options => {
                     if (options.activateRowMoveManager && !this.model.value("data:rowMovePlugin")) {
                         this.model.value("data:rowMovePlugin", new Slick.RowMoveManager({
@@ -67,21 +67,21 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "renderGrid", spool: "created",
+                name: "table:render", spool: "created",
                 func: () => {
                     this.model.value("command:renderGrid", true)
                 }
             })
 
             ComponentJS(this).register({
-                name: "resizeGrid", spool: "created",
+                name: "table:resize", spool: "created",
                 func: () => {
                     this.model.value("command:resizeGrid", true)
                 }
             })
 
             ComponentJS(this).register({
-                name: "changeRowCount", spool: "created",
+                name: "table:changeRowCount", spool: "created",
                 func: () => {
                     if (this.useDataView)
                         this.model.value("command:changeRowCount", true)
@@ -89,7 +89,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "changedRows", spool: "created",
+                name: "table:changedRows", spool: "created",
                 func: args => {
                     if (this.useDataView) {
                         this.model.value("command:changedRows", args)
@@ -103,7 +103,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "scrollToIndex", spool: "created",
+                name: "table:scrollToIndex", spool: "created",
                 func: index => {
                     if (index === 0) {
                         this.model.value("command:scrollRowToTop", 0)
@@ -115,7 +115,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
             //todo evtl kein command sondern data
             ComponentJS(this).register({
-                name: "setOnBeforeEditCellCallback", spool: "created",
+                name: "table:setOnBeforeEditCellCallback", spool: "created",
                 func: callback => {
                     this.model.value("command:setOnBeforeEditCellCallback", {"onBeforeEditCellCallback": callback})
                 }
@@ -123,14 +123,14 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
             //todo evtl kein command sondern data
             ComponentJS(this).register({
-                name: "setOnBeforeMoveRowsCallback", spool: "created",
+                name: "table:setOnBeforeMoveRowsCallback", spool: "created",
                 func: callback => {
                     this.model.value("command:setOnBeforeMoveRowsCallback", {callback: callback})
                 }
             })
 
             ComponentJS(this).register({
-                name: "singleSelectPluginOptions", spool: "created",
+                name: "table:singleSelectPluginOptions", spool: "created",
                 func: singleSelectPluginOptions => {
                     let singleSelectPlugin = new Slick.SingleSelect(singleSelectPluginOptions)
                     this.model.value("data:singleSelectPlugin", singleSelectPlugin)
@@ -138,7 +138,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "multiSelectPluginOptions", spool: "created",
+                name: "table:multiSelectPluginOptions", spool: "created",
                 func: multiSelectPluginOptions => {
                     let multiSelectPlugin = new Slick.MultiSelect(multiSelectPluginOptions)
                     this.model.value("data:multiSelectPlugin", multiSelectPlugin)
@@ -146,7 +146,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "treePluginOptions", spool: "created",
+                name: "table:treePluginOptions", spool: "created",
                 func: treePluginOptions => {
                     let treePlugin = new Slick.TreeTable(treePluginOptions)
                     this.model.value("data:treePlugin", treePlugin)
@@ -154,7 +154,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             ComponentJS(this).register({
-                name: "setSelectedItems", spool: "created",
+                name: "table:selectedItems", spool: "created",
                 func: selectedItems => {
                     if (Object.prototype.toString.call(selectedItems) !== Object.prototype.toString.call([]))
                         selectedItems = [selectedItems]

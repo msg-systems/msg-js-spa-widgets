@@ -37,13 +37,13 @@ ___config.package___.ctrl = ComponentJS.clazz({
             }
             this.isTree = this.isTreeTable
 
-            this.registerAPI("changeCollapsedStates", collapsed => {
+            this.registerAPI("table:changeCollapsedStates", collapsed => {
                 if (this.isFunction(this.updateCollapsedStateOfAllItemsTo))
                     this.updateCollapsedStateOfAllItemsTo(collapsed)
             })
 
-            this.registerAPI("invalidate", () => {
-                this.table.call("resizeGrid")
+            this.registerAPI("table:invalidate", () => {
+                this.table.call("table:resize")
             })
         },
 
@@ -55,18 +55,18 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 this.dataView = dataView
             }
             if (this.dataView) {
-                this.table.call("setTableData", this.dataView)
+                this.table.call("table:data", this.dataView)
             }
             if (this.groupItemMetadataProvider) {
-                this.table.call("setGroupItemMetadataProvider", this.groupItemMetadataProvider)
+                this.table.call("table:groupItemMetadataProvider", this.groupItemMetadataProvider)
             }
 
             let tableOptions = this.model.value("data:tableOptions")
             if (tableOptions.activateSelectPlugIn || tableOptions.activateRowSelectionModel) {
                 if (tableOptions.multiSelect) {
-                    this.table.call("multiSelectPluginOptions", this.multiSelectPluginOptions())
+                    this.table.call("table:multiSelectPluginOptions", this.multiSelectPluginOptions())
                 } else {
-                    this.table.call("singleSelectPluginOptions", this.singleSelectPluginOptions())
+                    this.table.call("table:singleSelectPluginOptions", this.singleSelectPluginOptions())
                 }
             }
         },
@@ -89,24 +89,24 @@ ___config.package___.ctrl = ComponentJS.clazz({
             })
 
             this.subscribeForChildEvent("dataView:onRowCountChanged", () => {
-                this.table.call("changeRowCount")
+                this.table.call("table:changeRowCount")
             })
 
             this.subscribeForChildEvent("dataView:onRowsChanged", (ev, args) => {
-                this.table.call("changedRows", args)
+                this.table.call("table:changedRows", args)
             })
 
             this.subscribeForChildEvent("dataView:scrollToIndex", (ev, index) => {
                 ev.propagation(false)
-                this.table.call("scrollToIndex", index)
+                this.table.call("table:scrollToIndex", index)
             })
 
             this.observeParentModel("global:command:resize", (/*ev, value*/) => {
-                this.table.call("resizeGrid")
+                this.table.call("table:resize")
             })
 
             this.observeOwnModel("data:tableColumns", (ev, columns) => {
-                this.table.call("setTableHeader", columns)
+                this.table.call("table:columns", columns)
                 // da die Werte der einzelnen Zellen (=Spalten) beim Filtern überprüft werden werden,
                 // muss erneut gefiltert werden, wenn sich die Spalten ändern
                 this.model.touch("data:filterValue")
@@ -114,11 +114,11 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
             this.observeOwnModel("data:tableOptions", (ev, newValue, oldValue, op, path) => {
                 if (path.indexOf(".") === -1) {
-                    this.table.call("setTableOptions", newValue)
+                    this.table.call("table:options", newValue)
                 } else {
                     let attr = path.replace(/^.+?\./, "")
                     this.model.value("data:tableOptions." + attr, newValue)
-                    this.table.call("setTableOptions", this.model.value("data:tableOptions"))
+                    this.table.call("table:options", this.model.value("data:tableOptions"))
                 }
             }, {boot: true})
 
@@ -166,8 +166,8 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
         ready () {
             this.base()
-            this.table.call("setOnBeforeEditCellCallback", this.onBeforeEditCell.bind(this))
-            this.table.call("setOnBeforeMoveRowsCallback", this.onBeforeMoveRows.bind(this))
+            this.table.call("table:setOnBeforeEditCellCallback", this.onBeforeEditCell.bind(this))
+            this.table.call("table:setOnBeforeMoveRowsCallback", this.onBeforeMoveRows.bind(this))
         },
 
         createTable () {
@@ -182,17 +182,17 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
         // has to be overwritten of the concrete controller
         multiSelectPluginOptions () {
-            throw "Please overwrite the method 'multiSelectPluginOptions' in the concrete table: " + ComponentJS(this).name()
+            throw "Please overwrite the method 'table:multiSelectPluginOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
         singleSelectPluginOptions () {
-            throw "Please overwrite the method 'singleSelectPluginOptions' in the concrete table: " + ComponentJS(this).name()
+            throw "Please overwrite the method 'table:singleSelectPluginOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         // has to be overwritten of the concrete controller
         treePluginOptions () {
-            throw "Please overwrite the method 'treePluginOptions' in the concrete table: " + ComponentJS(this).name()
+            throw "Please overwrite the method 'table:treePluginOptions' in the concrete table: " + ComponentJS(this).name()
         },
 
         //can be overwritten of the concrete controller
@@ -263,7 +263,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 this.items(this.generatePresentationTableEntries(newEntities))
                 this.model.touch("data:sortObject")
                 if (this.isTreeTable && newEntities && newEntities.length > 0 && existingEntitiesAsItems.length > 0)
-                    this.table.call("renderGrid")
+                    this.table.call("table:render")
             } else {
                 let deletedEntities = _.difference(existingEntitiesAsItems, newEntities)
                 let addedEntities = _.difference(newEntities, existingEntitiesAsItems)
@@ -471,9 +471,9 @@ ___config.package___.ctrl = ComponentJS.clazz({
                     // wenn es sich um einen Baum handelt, muss der Baum auf jeden Fall den Ast bist zu dem selektierten Element aufklappen
                     this.expandBranchToItem(item)
                 }
-                this.table.call("scrollToIndex", this.rowIndexById(item.id))
+                this.table.call("table:scrollToIndex", this.rowIndexById(item.id))
             }
-            this.table.call("setSelectedItems", tableEntries)
+            this.table.call("table:selectedItems", tableEntries)
         },
 
         /**

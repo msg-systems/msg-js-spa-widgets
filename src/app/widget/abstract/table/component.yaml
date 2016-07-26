@@ -16,63 +16,62 @@ desc: "Dies ist eine abstrakte Komponente, welche Funktionalitäten zur Anbindun
 interface:
   api:
     register:
-      changeCollapsedStates:
+      "table:changeCollapsedStates":
         desc: "Passt den Klappzustand aller Items auf den gegebenen Wert an."
         param: "boolean"
-      invalidate:
-        desc: "Ruft den Call 'resizeGrid' der Tabellenkomponente auf"
+      "table:invalidate":
+        desc: "Ruft den Call 'table:resize' der Tabellenkomponente auf"
     call:
-      resizeGrid:
+      "table:resize":
         part: "widget-table"
         desc: "Sagt dem Tabellenwidget, dass sich das Grid in der Größe geändert hat und somit neu gerendert werden muss"
-      setTableData:
+      "table:data":
         part: "widget-table"
         desc: "Übergibt den Tabellenwidget sein SlickGrid DataView Objekt"
         param: "SlickGrid DataView Objekt"
-      setGroupItemMetadataProvider:
+      "table:groupItemMetadataProvider":
         part: "widget-table"
         desc: "Übergibt den Tabellenwidget das Grouping-Plugin"
         param: "SlickGrid Plugin"
-      multiSelectOptions:
+      "table:multiSelectPluginOptions":
         part: "widget-table"
         dssc: "Übergibt der Tabelle die Optionen inklusive dem Markup für die Spalte für Multi-Select"
         param: "Objekt"
-      singleSelectOptions:
+      "table:singleSelectPluginOptions":
         part: "widget-table"
         dssc: "Übergibt der Tabelle die Optionen inklusive dem Markup für die Spalte für Single-Select"
         param: "Objekt"
-      changeRowCount:
+      "table:changeRowCount":
         part: "widget-table"
         desc: "Gibt der Tabelle die Info, dass sich der Row Count geändert hat"
-      changedRows:
+      "table:changedRows":
         part: "widget-table"
         desc: "Gibt der Tabelle die Info, dass sich die Zeilen geändert haben"
         param: "object"
-
-      setTableHeader:
+      "table:columns":
         part: "widget-table"
         desc: "Übergibt dem Tabellenwidget die Spaltendefinitionen"
         param: "object - Spaltendefinitions-Objekte"
-      setTableOptions:
+      "table:options":
         part: "widget-table"
         desc: "Übergibt dem Tabellenwidget die Optionen"
         param: "entweder ein komplettes Objekt mit allen Optionen oder
                 zwei Parameter: ein bestimmtes Attribut mit einem bestimmten Wert"
-      setOnBeforeEditCellCallback:
+      "table:setOnBeforeEditCellCallback":
         part: "widget-table"
         desc: "Dieser Call darf erst im Lebenszyklus 'render' gemacht werden."
         param: "function - Eine Funktion die vom Widget aus aufgerufen wird um zu überprüfen ob eine bestimmte Zelle editierbar ist"
-      setOnBeforeMoveRowsCallback:
+      "table:setOnBeforeMoveRowsCallback":
         part: "widget-table"
         desc: "Dieser Call darf erst im Lebenszyklus 'render' gemacht werden."
         param: "function - Eine Funktion die vom Widget aus aufgerufen wird um zu überprüfen ob eine bestimmte Zeile verschoben werden darf."
-      renderGrid:
+      "table:render":
         part: "widget-table"
         desc: "Sagt dem Tabellenwidget, dass das Grid gerendert werden soll."
-      scrollToIndex:
+      "table:scrollToIndex":
         part: "widget-table"
         desc: "Sagt dem Tabellenwidget, dass das Grid an einen bestimmten Index scrollen soll."
-      setSelectedItems:
+      "table:selectedItems":
         desc: "Übergebe die gewünschten selektierten Präsentation-Objekten der Tabelle"
         param: "Array mit selektierten Zeilen (Präsentation-Objekten)"
         part: "table"
@@ -102,9 +101,9 @@ interface:
           desc: "Sagt der Tabelle, an den gegebenen Index zu scrollen"
           param: "number - Index"
         "dataView:onRowCountChanged":
-          desc: "Ruft den Call 'changeRowCount' der Tabellenkomponente auf"
+          desc: "Ruft den Call 'table:changeRowCount' der Tabellenkomponente auf"
         "dataView:onRowsChanged":
-          desc: "Ruft den Call 'changedRows' der Tabellenkomponente auf und übergibt den gegebenen Parameter"
+          desc: "Ruft den Call 'table:changedRows' der Tabellenkomponente auf und übergibt den gegebenen Parameter"
           param: "args - Objekt"
   model:
     define:
@@ -141,7 +140,7 @@ interface:
       global:
         command:
           resize:
-            desc: "Der Tabelle wird gesagt sich zu resizen, es wird ein Call auf 'resizeGrid' aufgerufen."
+            desc: "Der Tabelle wird gesagt sich zu resizen, es wird ein Call auf 'table:resize' aufgerufen."
       own:
         data:
           sortObject:
@@ -160,13 +159,13 @@ interface:
             param: "string"
           tableColumns:
             part: "Controller"
-            desc: "Die übergeben Spalten werden dem Tabellen-Widget übergeben (Call 'setTableOptions')"
+            desc: "Die übergeben Spalten werden dem Tabellen-Widget übergeben (Call 'table:options')"
             param: "Array mit Spalten-Objekten"
           tableOptions:
             part: "Controller"
             desc: "Es wird überprüft ob sich die Gesamtmenge der Optionen verändert hat oder nur eine bestimmte Option.
-                  Im ersten Fall wird ein Call auf 'setTableOptions' gemacht und die Gesamtmenge der Optionen übergeben.
-                  Im zweiten Fall wird ein Call auf 'setTableOptions' gemacht und das Attribut das sich geändert hat und der neue Wert übergeben."
+                  Im ersten Fall wird ein Call auf 'table:options' gemacht und die Gesamtmenge der Optionen übergeben.
+                  Im zweiten Fall wird ein Call auf 'table:options' gemacht und das Attribut das sich geändert hat und der neue Wert übergeben."
             param: "ev - ComponentJS-Event
                     newValue - Objekt (Optionen-Objekt) oder der neue Wert eines bestimmten Attributs
                     oldValue - vorherige gesetzte Objekt (Optionen-Objekt) oder der vorherige Wert eines bestimmten Attributs
@@ -182,7 +181,7 @@ interface:
                     oldValue - das Präsentation-Objekt der zuvor aktiven Zelle"
           selectedTableEntriesFromOutside:
             part: "Controller"
-            desc: "Sagt dem Tabellenwidget, dass die übergebene Präsentations-Objekte in der Tabelle selektiert werden sollen (call auf 'setSelectedItems' mit dem gegebene Array als Übergabeparameter)"
+            desc: "Sagt dem Tabellenwidget, dass die übergebene Präsentations-Objekte in der Tabelle selektiert werden sollen (call auf 'table:selectedItems' mit dem gegebene Array als Übergabeparameter)"
             param: "Array mit Präsentation-Objekten der Tabelle, welche in der Tabelle als selektiert markiert werden sollen"
           selectedTableEntriesFromTable:
             part: "Controller"
