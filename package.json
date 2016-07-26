@@ -2,7 +2,7 @@
     "name": "msg-js-spa-widgets",
     "homepage": "https://github.com/msg-systems/msg-js-spa-widgets",
     "description": "Single Page Application Widgets",
-    "version": "0.1.18",
+    "version": "0.1.19",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -27,7 +27,7 @@
     "dependencies": {
         "select2":                  "3.5.1",
         "vis":                      "4.16.1",
-        "bootstrap":                "3.3.6",
+        "bootstrap":                "3.3.7",
         "bootstrap-datepicker":     "1.6.1",
         "bootstrap-timepicker":     "0.5.2"
     },
@@ -59,7 +59,7 @@
         "babel-plugin-transform-es2015-destructuring":          "6.9.0",
         "babel-plugin-transform-es2015-block-scoping":          "6.10.1",
         "babel-plugin-transform-es2015-typeof-symbol":          "6.8.0",
-        "babel-plugin-transform-es2015-modules-commonjs":       "6.10.3",
+        "babel-plugin-transform-es2015-modules-commonjs":       "6.11.5",
         "babel-plugin-transform-regenerator":                   "6.11.4",
         "babel-polyfill":                                       "6.9.1"
     },

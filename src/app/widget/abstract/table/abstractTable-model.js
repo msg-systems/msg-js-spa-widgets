@@ -13,6 +13,7 @@ ___config.package___.model = ComponentJS.clazz({
     protos: {
 
         create () {
+            this.base()
             this.initializeOptions();
             ComponentJS(this).model({
                 "data:tableOptions": {value: this.options, valid: "{@?:any}"},
