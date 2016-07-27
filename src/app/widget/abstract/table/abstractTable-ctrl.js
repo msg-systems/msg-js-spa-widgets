@@ -388,6 +388,25 @@ ___config.package___.ctrl = ComponentJS.clazz({
             this.model.value("data:filterValue", filterValue, true)
         },
 
+        solveUmlaut (value) {
+            let text = (value === null || value === undefined) ? "" : value
+            if (text && typeof text === "string") {
+                text = text.toLowerCase();
+                text = text.replace(/ä/g, "ae");
+                text = text.replace(/ö/g, "oe");
+                text = text.replace(/ü/g, "ue");
+                text = text.replace(/ß/g, "ss");
+            }
+            return text;
+        },
+
+        sortStrings (value1, value2, sortDirection) {
+            let sortDir = sortDirection || 1;
+            let a = this.solveUmlaut(value1);
+            let b = this.solveUmlaut(value2);
+            return a === b ? 0 : ((a > b ? 1 : -1) * sortDir);
+        },
+
         sortTableEntries (sortObject) {
             if (sortObject && typeof this.items === "function" && typeof this.sortItems === "function") {
                 let tableItems = this.items()
@@ -404,7 +423,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
                             value1 = dataRow1[field]
                             value2 = dataRow2[field]
                         }
-                        return app.util.StringUtil.sortStrings(value1, value2, sortObject.asc)
+                        return this.sortStrings(value1, value2, sortObject.asc)
                     }
 
                     if (this.isTreeTable) {
