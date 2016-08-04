@@ -1,0 +1,7 @@
+URL:        http://jqueryui.com/download/
+Version:    1.12.0
+Components: Keycode
+	        Sortable
+Author:     jQuery Foundation, Inc. and other contributors
+License:    MIT license           
+            http://jquery.org/license

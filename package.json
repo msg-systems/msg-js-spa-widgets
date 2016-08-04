@@ -2,7 +2,7 @@
     "name": "msg-js-spa-widgets",
     "homepage": "https://github.com/msg-systems/msg-js-spa-widgets",
     "description": "Single Page Application Widgets",
-    "version": "0.1.21",
+    "version": "0.1.22",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -28,7 +28,7 @@
         "select2":                  "3.5.1",
         "vis":                      "4.16.1",
         "bootstrap":                "3.3.7",
-        "bootstrap-datepicker":     "1.6.1",
+        "bootstrap-datepicker":     "1.6.2",
         "bootstrap-timepicker":     "0.5.2"
     },
     "devDependencies": {
