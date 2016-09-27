@@ -46,13 +46,50 @@ app.widget.trait.dataView.ctrl = ComponentJS.trait({
 
         registerDataViewBindings () {
 
-            this.dataView.onRowCountChanged.subscribe((/*e, args*/) => {
-                this.publishEventToParent("dataView:onRowCountChanged")
+            this.dataView.onRowCountChanged.subscribe((e, args) => {
+                this.onRowCountChanged(args)
             })
 
             this.dataView.onRowsChanged.subscribe((e, args) => {
-                this.publishEventToParent("dataView:onRowsChanged", args)
+                this.onRowsChanged(args)
             })
+
+            this.dataView.onItemAdded.subscribe((e, args) => {
+                this.onItemAdded(args)
+            })
+
+            this.dataView.onItemDeleted.subscribe((e, args) => {
+                this.onItemDeleted(args)
+            })
+
+            this.dataView.onItemUpdated.subscribe((e, args) => {
+                this.onItemUpdated(args)
+            })
+        },
+
+        // needs to be implemented by component that includes this trait
+        onRowCountChanged (args) {
+            this.base(args)
+        },
+
+        // needs to be implemented by component that includes this trait
+        onRowsChanged (args) {
+            this.base(args)
+        },
+
+        // needs to be implemented by component that includes this trait
+        onItemAdded (args) {
+            this.base(args)
+        },
+
+        // needs to be implemented by component that includes this trait
+        onItemDeleted (args) {
+            this.base(args)
+        },
+
+        // needs to be implemented by component that includes this trait
+        onItemUpdated (args) {
+            this.base(args)
         },
 
         generateDataViewItem (entity, id) {
@@ -112,10 +149,14 @@ app.widget.trait.dataView.ctrl = ComponentJS.trait({
                 // Es kann sein, dass an eine bestimmte Stelle gescrollt werden soll, nachdem sich die Tabelle neu gerendert hat
                 // Ist das der Fall, so wird der Index unter this.scrollToIndex gespeichert und nach dem Hinscrollen zurückgesetzt
                 if (this.scrollToIndex !== null) {
-                    this.publishEventToParent("dataView:scrollToIndex", this.scrollToIndex)
+                    this.doScrollToIndex(this.scrollToIndex)
                     this.scrollToIndex = null
                 }
             }
+        },
+
+        doScrollToIndex (scrollToIndex) {
+            this.base(scrollToIndex)
         },
 
         deleteItemWithChildItems (item) {

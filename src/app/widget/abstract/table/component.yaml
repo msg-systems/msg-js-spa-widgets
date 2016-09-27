@@ -97,14 +97,6 @@ interface:
                 Nur wenn genau ein Präsentation-Objekten selektiert ist wird es in das Modelfeld 'data:selectedTableEntriesFromTable' gesetzt.
                 Ansonsten wird das Modelfeld 'data:selectedTableEntriesFromTable' auf ein leeres Array gesetzt"
           param: "Array von selektierten Tabelleneinträgen (Präsentation-Objekten)"
-        "dataView:scrollToIndex":
-          desc: "Sagt der Tabelle, an den gegebenen Index zu scrollen"
-          param: "number - Index"
-        "dataView:onRowCountChanged":
-          desc: "Ruft den Call 'table:changeRowCount' der Tabellenkomponente auf"
-        "dataView:onRowsChanged":
-          desc: "Ruft den Call 'table:changedRows' der Tabellenkomponente auf und übergibt den gegebenen Parameter"
-          param: "args - Objekt"
   model:
     define:
       own:

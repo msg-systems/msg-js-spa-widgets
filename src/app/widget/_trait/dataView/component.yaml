@@ -1,15 +1,3 @@
 package: "app.widget.trait.dataView"
 id: "appDataView"
-desc: ""
-interface:
-  events:
-    publish:
-      toParent:
-        "dataView:onRowCountChanged":
-          desc: "Propagiert, dass sich an den Daten der DataView, etwas geändert hat, dass sich die Anzahl der Zeilen/Items verändert hat."
-        "dataView:onRowsChanged":
-          desc: "Propagiert, dass sich an den Daten der DataView, etwas geändert hat, dass sich dieZeilen/Items verändert hat."
-          param: "object - args mit den Attribut 'rows' - Array der Reihen (als Index) welche, sich geändert haben."
-        "dataView:scrollToIndex":
-          desc: "Propagiert den Index, zu dem gescrollt werden soll."
-          param: "number - Index der Zeile/Item"
+desc: "Wrapper for SlickGrids DataView Plugin"

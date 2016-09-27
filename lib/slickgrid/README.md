@@ -8,6 +8,15 @@ As background for this extension we used the second answer of the question ['Is 
 
 All changes on SlickGrid try to assure that the existing SlickGrid code does not get side effects if the new `dynRowHeight` is not used.
 
+## Bugfixes
+
+* Fixed strange behaviour of collapsing/expanding groups when using dataviews.
+	See also here for further information: https://github.com/mleibman/SlickGrid/pull/898
+* Fixed behaviour of hidden cell editor in different Zoom-Level
+
+## Changes
+
+* added events to __DataView__ for updating (`onItemUpdated`), deletion (`onItemDeleted`) and add (`onItemAdded`) from a item -> event returns item and - if possible - index
 
 ## Use of grid option 'dynRowHeight'
 

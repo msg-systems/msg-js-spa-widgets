@@ -38,8 +38,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             this.isTree = this.isTreeTable
 
             this.registerAPI("table:changeCollapsedStates", collapsed => {
-                if (this.isFunction(this.updateCollapsedStateOfAllItemsTo))
-                    this.updateCollapsedStateOfAllItemsTo(collapsed)
+                this.updateCollapsedStateOfAllItemsTo(collapsed)
             })
 
             this.registerAPI("table:invalidate", () => {
@@ -51,6 +50,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             this.base()
 
             let dataView = this.publishEventToParent("dataView")
+            // this abstract components mixins the dataView trait, so by default, there the dataview is initialiazed
             if (dataView) {
                 this.dataView = dataView
             }
@@ -86,19 +86,6 @@ ___config.package___.ctrl = ComponentJS.clazz({
                     sortObject.field = field
                     this.model.value("data:sortObject", sortObject)
                 }
-            })
-
-            this.subscribeForChildEvent("dataView:onRowCountChanged", () => {
-                this.table.call("table:changeRowCount")
-            })
-
-            this.subscribeForChildEvent("dataView:onRowsChanged", (ev, args) => {
-                this.table.call("table:changedRows", args)
-            })
-
-            this.subscribeForChildEvent("dataView:scrollToIndex", (ev, index) => {
-                ev.propagation(false)
-                this.table.call("table:scrollToIndex", index)
             })
 
             this.observeParentModel("global:command:resize", (/*ev, value*/) => {
@@ -176,6 +163,31 @@ ___config.package___.ctrl = ComponentJS.clazz({
             }
         },
 
+        onRowCountChanged () {
+            this.table.call("table:changeRowCount")
+        },
+
+        onRowsChanged (args) {
+            this.table.call("table:changedRows", args)
+        },
+
+        // can be overwritten from concrete table
+        // args = {item: tableEntry}
+        onItemDeleted (/*args*/) {
+        },
+        // can be overwritten from concrete table
+        // args = {item: tableEntry, index: index}
+        onItemAdded (/*args*/) {
+        },
+        // can be overwritten from concrete table
+        // args = {item: tableEntry, index: index}
+        onItemUpdated (/*args*/) {
+        },
+
+        doScrollToIndex (scrollToIndex) {
+            this.table.call("table:scrollToIndex", scrollToIndex)
+        },
+
         // has to be overwritten of the concrete controller
         saveData (/*prevSelectedEntity*/) {
         },
@@ -232,11 +244,11 @@ ___config.package___.ctrl = ComponentJS.clazz({
 
         generatePresentationTableEntry (entity, pParent, isLeaf, defaultCollapsed) {
             let pTableEntry
-            if (this.isTreeTable && this.isFunction(this.itemById)) {
+            if (this.isTreeTable) {
                 let pParentItem = pParent !== undefined ? pParent : this.itemById(this.presentationIdOfEntity(this.parentOfEntity(entity)))
                 let itemIsLeaf = isLeaf !== undefined ? isLeaf : true
                 pTableEntry = this.generatePresentationTreeEntry(entity, pParentItem, itemIsLeaf, defaultCollapsed)
-            } else if (this.isFunction(this.generateDataViewItem)) {
+            } else {
                 pTableEntry = this.generateDataViewItem(entity, this.presentationIdOfEntity(entity))
                 this.addPresentationAttributesToItemFromEntity(pTableEntry, entity)
             }
@@ -247,58 +259,75 @@ ___config.package___.ctrl = ComponentJS.clazz({
         // to extend the presentation items the method 'addPresentationAttributesToItemFromEntity' should be used
         // defaultCollapsed: normally the trees are all collapsed, but if u want another default behaviour and have the tree all open, u can defaultCollapsed as false
         generatePresentationTreeEntry (entity, pParent, isLeaf, defaultCollapsed) {
-            let pTreeEntry = {}
-            if (this.isFunction(this.generateDataViewTreeItem))
-                pTreeEntry = this.generateDataViewTreeItem(entity, this.presentationIdOfEntity(entity), pParent, isLeaf, defaultCollapsed)
+            let pTreeEntry = this.generateDataViewTreeItem(entity, this.presentationIdOfEntity(entity), pParent, isLeaf, defaultCollapsed)
             this.addPresentationAttributesToItemFromEntity(pTreeEntry, entity, pParent)
             return pTreeEntry
         },
 
-        updatePresentationTableEntries (newEntities, oldEntities, force) {
-            let existingEntitiesAsItems = _.map(this.items(), "entity")
-            if (force || (newEntities !== oldEntities ||
-                ((newEntities && newEntities.length > 0) && this.items().length === 0) ||
-                ((!newEntities || newEntities.length === 0) && this.items().length > 0))) {
+        deleteEntities (entities) {
+            let entitiesToDel = entities
+            if (Object.prototype.toString.call(entities) !== Object.prototype.toString.call([])) {
+                entitiesToDel = [entities]
+            }
+            this.beginUpdate()
+            _.forEach(entitiesToDel, entity => {
+                this.deleteItemById(this.presentationIdOfEntity(entity))
+            })
+            this.endUpdate()
+        },
+
+        addEntities (entities) {
+            let entitiesToAdd = entities
+            if (Object.prototype.toString.call(entities) !== Object.prototype.toString.call([])) {
+                entitiesToAdd = [entities]
+            }
+            this.beginUpdate()
+            _.forEach(entitiesToAdd, entity => {
+                let item = this.generatePresentationTableEntry(entity)
+                this.addItem(item)
+            })
+            this.endUpdate()
+        },
+
+        updateEntities (entities) {
+            let entitiesToUpdate = entities
+            if (Object.prototype.toString.call(entities) !== Object.prototype.toString.call([])) {
+                entitiesToUpdate = [entities]
+            }
+            this.beginUpdate()
+            _.forEach(entitiesToUpdate, entity => {
+                let pItem = this.itemById(this.presentationIdOfEntity(entity))
+                this.updateItemsFromEntities(this.itemsToUpdate(pItem, entity))
+            })
+            this.endUpdate()
+        },
+
+        replaceEntityWithEntity (oldEntity, newEntity) {
+            this.beginUpdate()
+            this.deleteEntities(oldEntity)
+            this.addEntities(newEntity)
+            this.endUpdate()
+        },
+
+        updatePresentationTableEntries (newEntities, oldEntities) {
+            let items = this.items()
+            if (newEntities !== oldEntities ||
+                ((newEntities && newEntities.length > 0) && items.length === 0) ||
+                ((!newEntities || newEntities.length === 0) && items.length > 0)) {
                 //RESET or newly SET
                 this.items(this.generatePresentationTableEntries(newEntities))
                 this.model.touch("data:sortObject")
+                let existingEntitiesAsItems = _.map(items, "entity")
                 if (this.isTreeTable && newEntities && newEntities.length > 0 && existingEntitiesAsItems.length > 0)
                     this.table.call("table:render")
-            } else {
-                let deletedEntities = _.difference(existingEntitiesAsItems, newEntities)
-                let addedEntities = _.difference(newEntities, existingEntitiesAsItems)
-
-                this.beginUpdate()
-                //DELETE
-                if (this.isFunction(this.deleteItemById)) {
-                    _.forEach(deletedEntities, delEntity => {
-                        this.deleteItemById(this.presentationIdOfEntity(delEntity))
-                    })
-                }
-                //ADD
-                if (this.isFunction(this.addItem)) {
-                    _.forEach(addedEntities, addEntity => {
-                        let item = this.generatePresentationTableEntry(addEntity)
-                        this.addItem(item)
-                    })
-                }
-                //UPDATE
-                _.forEach(newEntities, newEntity => {
-                    let pItem = this.itemById(this.presentationIdOfEntity(newEntity))
-                    if (pItem && newEntity.version !== pItem.version) {
-                        this.updateItemsFromEntities(this.itemsToUpdate(pItem, newEntity))
-                    }
-                })
-                this.endUpdate()
             }
-
             // if it is possible to select row(s) in table, update the selection after the data changed
             if (this.model.value("data:tableOptions.activateSelectPlugIn") || this.model.value("data:tableOptions.activateRowSelectionModel"))
                 this.updateSelectedTableEntriesFromOutside(this.selectedData())
         },
 
         /**
-         * through overwriting this mehtod spezific presentation attributes can be added to a given presentation item
+         * through overwriting this method spezific presentation attributes can be added to a given presentation item
          * this method is called when generating all items and when updating an exisiting item
          */
         addPresentationAttributesToItemFromEntity (/*item, entity, pParent*/) {
@@ -316,8 +345,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         updateTableEntry (tableEntry) {
-            if (this.isFunction(this.updateDataViewItem))
-                this.updateDataViewItem(tableEntry)
+            this.updateDataViewItem(tableEntry)
         },
 
         updateItemsFromEntities (itemObjs) {
@@ -328,8 +356,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
             }
             _.forEach(itemsToUpdate, itemObj => {
                 this.updatePresentationAttributesToItemFromEntity(itemObj.item, itemObj.entity, itemObj.item.pParent)
-                if (this.isFunction(this.updateDataViewItem))
-                    this.updateDataViewItem(itemObj.item)
+                this.updateDataViewItem(itemObj.item)
             })
         },
 
@@ -338,8 +365,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         itemFromEntity (entity) {
-            if (this.isFunction(this.itemById))
-                return this.itemById(this.presentationIdOfEntity(entity))
+            return this.itemById(this.presentationIdOfEntity(entity))
         },
 
         // this returns the index of the item with the id in the whole amount of data, does not matter if all itesm visible or not (e.g. needed for inserting)
@@ -473,13 +499,6 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 this.model.value("data:tableColumns", allColumns)
                 this.deactivateGrouping()
             }
-        },
-
-        isFunction (functionName) {
-            if (typeof functionName === "function")
-                return true
-            else
-                throw new Error("Please integrate the DataView Trait if you want to use this function: " + functionName.toString())
         },
 
         setSelectedTableEntriesFromOutside (tableEntries) {
