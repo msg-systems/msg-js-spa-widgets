@@ -27,3 +27,4 @@ build:
 - spa.widget.slickGrid.editor
 - spa.widget.slickGrid.componentjsWrapper
 - spa.widget.vis
+- spa.widget.fontawesome
