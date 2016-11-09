@@ -2,7 +2,7 @@
     "name": "uica-widgets",
     "homepage": "https://github.com/msg-systems/uica-widgets",
     "description": "User Interface Component Architecture Widgets",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -24,7 +24,7 @@
         "url": "https://github.com/msg-systems/uica-widgets/issues"
     },
     "scripts": {
-        "prepublish": "npm test && npm run upd && grunt",
+        "prepublish": "npm run upd && grunt && npm run test",
         "upd":        "upd -n",
         "test":       "deliveryPacker deliveryTest.yaml"
     },
