@@ -1,8 +1,8 @@
 {
-    "name": "msg-js-spa-widgets",
-    "homepage": "https://github.com/msg-systems/msg-js-spa-widgets",
-    "description": "Single Page Application Widgets",
-    "version": "0.1.27",
+    "name": "uica-widgets",
+    "homepage": "https://github.com/msg-systems/uica-widgets",
+    "description": "User Interface Component Architecture Widgets",
+    "version": "0.9.0",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -12,16 +12,17 @@
         "page",
         "application",
         "app",
-        "widgets"
+        "widgets",
+        "uica",
+        "user interface component architecture"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/msg-systems/msg-js-spa-widgets"
+        "url": "https://github.com/msg-systems/uica-widgets"
     },
     "bugs": {
-        "url": "https://github.com/msg-systems/msg-js-spa-widgets/issues"
+        "url": "https://github.com/msg-systems/uica-widgets/issues"
     },
-    "deprecated": "msg-js-spa-widgets has been renamed to uica-widgets, please install the latest version of uica-widgets instead of msg-js-spa-widgets",
     "scripts": {
         "prepublish": "npm test && npm run upd && grunt",
         "upd":        "upd -n",

@@ -1,2 +1,2 @@
-# msg-js-spa-widgets
-msg JavaScript Single-Page-App (SPA) Widgets
+# uica-widgets
+User Interface Component Architecture (UICA) Widgets
