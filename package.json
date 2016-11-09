@@ -2,7 +2,7 @@
     "name": "msg-js-spa-widgets",
     "homepage": "https://github.com/msg-systems/msg-js-spa-widgets",
     "description": "Single Page Application Widgets",
-    "version": "0.1.26",
+    "version": "0.1.27",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -21,6 +21,7 @@
     "bugs": {
         "url": "https://github.com/msg-systems/msg-js-spa-widgets/issues"
     },
+    "deprecated": "msg-js-spa-widgets has been renamed to uica-widgets, please install the latest version of uica-widgets instead of msg-js-spa-widgets",
     "scripts": {
         "prepublish": "npm test && npm run upd && grunt",
         "upd":        "upd -n",
