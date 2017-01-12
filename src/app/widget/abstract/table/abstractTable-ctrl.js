@@ -502,16 +502,21 @@ ___config.package___.ctrl = ComponentJS.clazz({
         },
 
         setSelectedTableEntriesFromOutside (tableEntries) {
+            this.scrollSelectionIntoView(tableEntries)
+            this.table.call("table:selectedItems", tableEntries)
+        },
+
+        scrollSelectionIntoView (tableEntries) {
+            let selection = tableEntries === undefined ? this.model.value("data:selectedTableEntriesFromOutside") : tableEntries
             // soll nur zu einem Eintrag aufgeklappt und gescrollt werden, wenn Single-Selekt aktiv ist
-            if (!this.model.value("data:tableOptions").multiSelect && tableEntries.length === 1) {
-                let item = tableEntries[0]
+            if (!this.model.value("data:tableOptions").multiSelect && selection.length === 1) {
+                let item = selection[0]
                 if (this.isTreeTable && typeof this.expandBranchToItem === "function") {
                     // wenn es sich um einen Baum handelt, muss der Baum auf jeden Fall den Ast bist zu dem selektierten Element aufklappen
                     this.expandBranchToItem(item)
                 }
                 this.table.call("table:scrollToIndex", this.rowIndexById(item.id))
             }
-            this.table.call("table:selectedItems", tableEntries)
         },
 
         /**
