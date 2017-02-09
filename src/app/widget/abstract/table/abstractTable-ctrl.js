@@ -312,8 +312,8 @@ ___config.package___.ctrl = ComponentJS.clazz({
         updatePresentationTableEntries (newEntities, oldEntities) {
             let items = this.items()
             if (newEntities !== oldEntities ||
-                ((newEntities && newEntities.length > 0) && items.length === 0) ||
-                ((!newEntities || newEntities.length === 0) && items.length > 0)) {
+                (newEntities && newEntities.length !== items.length) ||
+                (!newEntities && items.length > 0)){
                 //RESET or newly SET
                 this.items(this.generatePresentationTableEntries(newEntities))
                 this.model.touch("data:sortObject")
