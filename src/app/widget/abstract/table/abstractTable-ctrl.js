@@ -241,7 +241,8 @@ ___config.package___.ctrl = ComponentJS.clazz({
             return tableEntries
         },
 
-
+         // this method should not be overwritten
+         // if there are more attributes needed on teh presentation table items use the method 'addPresentationAttributesToItemFromEntity' instead
         generatePresentationTableEntry (entity, pParent, isLeaf, defaultCollapsed) {
             let pTableEntry
             if (this.isTreeTable) {
@@ -250,17 +251,18 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 pTableEntry = this.generatePresentationTreeEntry(entity, pParentItem, itemIsLeaf, defaultCollapsed)
             } else {
                 pTableEntry = this.generateDataViewItem(entity, this.presentationIdOfEntity(entity))
-                this.addPresentationAttributesToItemFromEntity(pTableEntry, entity)
+                this.enhanceItem(pTableEntry, entity)
             }
             return pTableEntry
         },
 
         // should be used of every tree table
+        // but should NEVER be overwritten, INSTEAD:
         // to extend the presentation items the method 'addPresentationAttributesToItemFromEntity' should be used
         // defaultCollapsed: normally the trees are all collapsed, but if u want another default behaviour and have the tree all open, u can defaultCollapsed as false
         generatePresentationTreeEntry (entity, pParent, isLeaf, defaultCollapsed) {
             let pTreeEntry = this.generateDataViewTreeItem(entity, this.presentationIdOfEntity(entity), pParent, isLeaf, defaultCollapsed)
-            this.addPresentationAttributesToItemFromEntity(pTreeEntry, entity, pParent)
+            this.enhanceItem(pTreeEntry, entity, pParent)
             return pTreeEntry
         },
 
@@ -326,6 +328,15 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 this.updateSelectedTableEntriesFromOutside(this.selectedData())
         },
 
+        // this is an internal method, this should NEVER be overwritten
+        enhanceItem (item, entity, pParent) {
+            this.addPresentationAttributesToItemFromEntity(item, entity, pParent)
+            if (item.id !== this.presentationIdOfEntity(entity)) {
+                throw "In the overwritten method 'addPresentationAttributesToItemFromEntity' it is not allowed to overwrite the attribute 'id' of the item." +
+                "If you need another id then the default, please overwrite the method 'presentationIdOfEntity' and return the value of the id there."
+            }
+        },
+
         /**
          * through overwriting this method spezific presentation attributes can be added to a given presentation item
          * this method is called when generating all items and when updating an exisiting item
@@ -341,7 +352,7 @@ ___config.package___.ctrl = ComponentJS.clazz({
                 }
             })
             item.entity = entity
-            this.addPresentationAttributesToItemFromEntity(item, entity, pParent)
+            this.enhanceItem(item, entity, pParent)
         },
 
         updateTableEntry (tableEntry) {
