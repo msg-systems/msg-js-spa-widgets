@@ -40,9 +40,9 @@ ___config.package___.model = ComponentJS.clazz({
         "topPanelHeight?: number, " +
         "dynRowHeight?: boolean, " +
             // slickgrid addons by this component
-        "activateRowSelectionModel?: boolean, " + // activates selection generelly in the grid, if this is false, all other selection options do not have any impact
+        "activateRowSelectionModel?: boolean, " + // activates selection generally in the grid, if this is false, all other selection options do not have any impact
         "activateSelectPlugIn?: boolean, " + // activates a selection plugin, that has its own column single or multi, depending on grid option 'multiselect'
-        "selectActiveRow?: boolean, " + // default: true, if false only in the selectplugin column selection is possible - if activateSelectPlugIn === false, selectActiveRow shoul be true
+        "selectActiveRow?: boolean, " + // default: true, if false only in the selectplugin column selection is possible - if activateSelectPlugIn === false, selectActiveRow should be true
         "activateTreeTableFunctionality?: boolean, " +
         "activateRowMoveManager?: boolean, " +
         "activateGrouping?: boolean" +

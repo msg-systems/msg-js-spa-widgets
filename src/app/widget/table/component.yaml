@@ -137,16 +137,26 @@ interface:
             desc: "Hält die Tabellendaten"
             param: "Array"
           columns:
-            desc: "Menge der Slickgrid Spaltendefinitionen. Die Standard Attribute von SLickGrid einer Spalten wurden mit folgenden erweitert:
-                  - useFormatterForSearch: boolean
-                  - useFormatterForSort: boolean
-                  - validator: object
+            desc: "Menge der Slickgrid Spaltendefinitionen. Die Standard Attribute von SlickGrid einer Spalten wurden mit folgenden erweitert:
+                  - useFormatterForSearch: boolean (gibt an ob der Wert oder falls true der formatierte Wert für die Suche verwendet werden soll)
+                  - useFormatterForSort: boolean (gibt an ob der Wert oder falls true der formatierte Wert für das Sortieren verwendet werden soll)
+                  - validator: object (Eine Funktion zum Validieren des Spalten-Inhaltes)
                   - previousWidth: number
-                  - tableDroppable: boolean"
+                  - tableDroppable: boolean (gibt an, ob in die Tabelle Elemente gedroppt werden können)"
             param: "Array von Objekten mit der Signatur - siehe table-model.js -> dynamics -> singleColumnFormat"
           options:
-            desc: "Menge der Slickgrid Tabellen Optionen"
-            param: "Objekt mit der Signatur - siehe table-model.js -> dynamics -> optionsFormat"
+            desc: "Menge der Slickgrid Tabellen Optionen.
+                  Die Standard Optionen von SlickGrid wurden mit folgenden erweitert:
+                  - dynRowHeight: boolean (gibt an ob sich die Höhe einer Reihe dynamishc am Inhalt anpassen soll)
+                  - activateRowSelectionModel: boolean (aktiviert die Selektion in der Tabelle allgmein.
+                                              Wenn dieser Wert auf false gesetzt wird, haben die Optionen activateSelectPlugIn und selectActiveRow keine Auswirkung)
+                  - activateSelectPlugIn: boolean (aktiviert das Selekt-Plugin der Tabelle. Dadurch wird eine eigene Spalte Single oder Multi (abh. von der Option multiselect) in die Tabelle gerendert)
+                  - selectActiveRow: boolean (default: true - Ist der Wert false, die Selektion einer Tabellenzeile kann nur über die Spalte für die Selektion erfolgen und nicht über andere Spalten.
+                                                       Deswegen sollte selectActiveRow auf true gesetzt werden, wenn activateSelectPlugIn auf false gesetzt wird.)
+                  - activateTreeTableFunctionality: boolean (es kann angegeben werden, wenn ein Baum dargestellt werden soll)
+                  - activateRowMoveManager: boolean (es kann angegeben werden, wenn es möglich sein soll, die Tabellenzeilen per Drag & Drop verschieben zu können.)
+                  - activateGrouping: boolean (es kann angegeben werden, wenn es möglich sein soll Den Tabelleninhalt anhand der einzelnen Spalten zu gruppieren.)"
+            param: "Objekt mit der Signatur - siehe table-model.js -> dynamics -> optionsFormat."
           selectedCell:
             desc: "Die aktuell selektierte Zelle der Tabelle"
             param: "Objekt"
