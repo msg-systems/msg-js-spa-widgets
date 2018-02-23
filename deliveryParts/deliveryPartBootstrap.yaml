@@ -55,3 +55,8 @@ register:
     - ../node_modules/bootstrap-timepicker/js/bootstrap-timepicker.js
     CSS:
     - ../node_modules/bootstrap-timepicker/css/bootstrap-timepicker.css
+  spa.widget.bootstrap.datetimepicker:
+    JS:
+    - ../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js
+    CSS:
+    - ../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css
