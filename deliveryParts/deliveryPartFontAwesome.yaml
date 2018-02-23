@@ -1,5 +1,5 @@
 register:
-  spa.widget.fontawesome:
+  uica.widget.fontawesome:
     CSS:
     - name: ../node_modules/font-awesome/css/font-awesome.css
       ASSETS:

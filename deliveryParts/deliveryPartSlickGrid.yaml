@@ -1,32 +1,32 @@
 register:
-  spa.widget.slickGrid.core:
+  uica.widget.slickGrid.core:
     JS:
-    - ../lib/slickgrid/lib/jquery.event.drag-2.2.js
-    - ../lib/slickgrid/lib/jquery.event.drop-2.2.js
-    - ../lib/jquery-ui-1.12.0.custom/jquery-ui.js
-    - ../lib/slickgrid/slick.core.js
-    - ../lib/slickgrid/slick.grid.js
-    - ../lib/slickgrid/slick.groupitemmetadataprovider.js
-    - ../lib/slickgrid/plugins/slick.autotooltips.js
+    - ../node_modules/slickgrid/lib/jquery.event.drag-2.3.0.js
+    - ../node_modules/slickgrid/lib/jquery.event.drop-2.3.0.js
+    - ../node_modules/slickgrid/lib/jquery-ui-1.9.2.js
+    - ../node_modules/slickgrid/slick.core.js
+    - ../node_modules/slickgrid/slick.grid.js
+    - ../node_modules/slickgrid/slick.groupitemmetadataprovider.js
+    - ../node_modules/slickgrid/plugins/slick.autotooltips.js
     CSS:
-    - name: ../lib/slickgrid/slick.grid.css
+    - name: ../node_modules/slickgrid/slick.grid.css
       ASSETS:
-      - ../lib/slickgrid/images/sort-asc.gif
-      - ../lib/slickgrid/images/sort-desc.gif
-    - name: ../lib/slickgrid/slick-default-theme.css
+      - ../node_modules/slickgrid/images/sort-asc.gif
+      - ../node_modules/slickgrid/images/sort-desc.gif
+    - name: ../node_modules/slickgrid/slick-default-theme.css
       ASSETS:
-      - ../lib/slickgrid/images/collapse.gif
-      - ../lib/slickgrid/images/expand.gif
-      - ../lib/slickgrid/images/header-columns-bg.gif
-      - ../lib/slickgrid/images/header-columns-over-bg.gif
-  spa.widget.slickGrid.dataView:
+      - ../node_modules/slickgrid/images/collapse.gif
+      - ../node_modules/slickgrid/images/expand.gif
+      - ../node_modules/slickgrid/images/header-columns-bg.gif
+      - ../node_modules/slickgrid/images/header-columns-over-bg.gif
+  uica.widget.slickGrid.dataView:
     JS:
-    - ../lib/slickgrid/slick.dataview.js
+    - ../node_modules/slickgrid/slick.dataview.js
     - ../dist/app/widget/_trait/dataView/dataView-ctrl.js
-  spa.widget.slickGrid.formatters:
+  uica.widget.slickGrid.formatters:
     JS:
-    - ../lib/slickgrid/slick.formatters.js
-  spa.widget.slickGrid.editor:
+    - ../node_modules/slickgrid/slick.formatters.js
+  uica.widget.slickGrid.editor:
     JS:
     - ../dist/app/widget/table/editor/abstractEditor.js
     - ../dist/app/widget/table/editor/textEditor/textEditor.js
@@ -44,9 +44,9 @@ register:
     - ../dist/app/widget/table/editor/numberEditor/numberEditor.html
     - ../dist/app/widget/table/editor/checkboxEditor/checkboxEditor.html
     - ../dist/app/widget/table/editor/longTextEditor/longTextEditor.html
-  spa.widget.slickGrid.componentjsWrapper:
+  uica.widget.slickGrid.componentjsWrapper:
     JS:
-    - ../lib/slickgrid/slick.dataview.js
+    - ../node_modules/slickgrid/slick.dataview.js
     - ../dist/app/widget/_trait/dataView/dataView-ctrl.js
     - ../dist/app/widget/table/table-ctrl.js
     - ../dist/app/widget/table/table-model.js
@@ -58,40 +58,40 @@ register:
     - ../dist/app/widget/table/table.css
     MARKUP:
     - ../dist/app/widget/table/table.html
-  spa.widget.slickGrid.plugin.cellcopymanager:
+  uica.widget.slickGrid.plugin.cellcopymanager:
     JS:
-    - ../lib/slickgrid/plugins/slick.cellcopymanager.js
-  spa.widget.slickGrid.plugin.cellrangedecorator:
+    - ../node_modules/slickgrid/plugins/slick.cellcopymanager.js
+  uica.widget.slickGrid.plugin.cellrangedecorator:
     JS:
-    - ../lib/slickgrid/plugins/slick.cellrangedecorator.js
-  spa.widget.slickGrid.plugin.cellrangeselector:
+    - ../node_modules/slickgrid/plugins/slick.cellrangedecorator.js
+  uica.widget.slickGrid.plugin.cellrangeselector:
     JS:
-    - ../lib/slickgrid/plugins/slick.cellrangeselector.js
-  spa.widget.slickGrid.plugin.cellselectionmodel:
+    - ../node_modules/slickgrid/plugins/slick.cellrangeselector.js
+  uica.widget.slickGrid.plugin.cellselectionmodel:
     JS:
-    - ../lib/slickgrid/plugins/slick.cellselectionmodel.js
-  spa.widget.slickGrid.plugin.checkboxselectcolumn:
+    - ../node_modules/slickgrid/plugins/slick.cellselectionmodel.js
+  uica.widget.slickGrid.plugin.checkboxselectcolumn:
     JS:
-    - ../lib/slickgrid/plugins/slick.checkboxselectcolumn.js
-  spa.widget.slickGrid.plugin.headerbuttons:
+    - ../node_modules/slickgrid/plugins/slick.checkboxselectcolumn.js
+  uica.widget.slickGrid.plugin.headerbuttons:
     JS:
-    - ../lib/slickgrid/plugins/slick.headerbuttons.js
+    - ../node_modules/slickgrid/plugins/slick.headerbuttons.js
     CSS:
-    - ../lib/slickgrid/plugins/slick.headerbuttons.css
-  spa.widget.slickGrid.plugin.headermenu:
+    - ../node_modules/slickgrid/plugins/slick.headerbuttons.css
+  uica.widget.slickGrid.plugin.headermenu:
     JS:
-    - ../lib/slickgrid/plugins/slick.headermenu.js
+    - ../node_modules/slickgrid/plugins/slick.headermenu.js
     CSS:
-    - ../lib/slickgrid/plugins/slick.headermenu.css
-  spa.widget.slickGrid.plugin.rowmovemanager:
+    - ../node_modules/slickgrid/plugins/slick.headermenu.css
+  uica.widget.slickGrid.plugin.rowmovemanager:
     JS:
-    - ../lib/slickgrid/plugins/slick.rowmovemanager.js
-  spa.widget.slickGrid.plugin.rowselectionmodel:
+    - ../node_modules/slickgrid/plugins/slick.rowmovemanager.js
+  uica.widget.slickGrid.plugin.rowselectionmodel:
     JS:
-    - ../lib/slickgrid/plugins/slick.rowselectionmodel.js
-  spa.widget.slickGrid.plugin.singleselect:
+    - ../node_modules/slickgrid/plugins/slick.rowselectionmodel.js
+  uica.widget.slickGrid.plugin.singleselect:
     JS:
     - ../dist/app/widget/table/plugins/slick.singleselect.js
-  spa.widget.slickGrid.plugin.multiselect:
+  uica.widget.slickGrid.plugin.multiselect:
     JS:
     - ../dist/app/widget/table/plugins/slick.multiselect.js

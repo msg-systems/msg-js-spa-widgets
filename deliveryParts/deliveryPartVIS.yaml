@@ -1,5 +1,5 @@
 register:
-  spa.widget.vis:
+  uica.widget.vis:
     JS:
     - ../node_modules/vis/dist/vis.js
     CSS:

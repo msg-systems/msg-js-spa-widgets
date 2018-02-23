@@ -2,7 +2,7 @@
     "name": "uica-widgets",
     "homepage": "https://github.com/msg-systems/uica-widgets",
     "description": "User Interface Component Architecture Widgets",
-    "version": "1.0.0",
+    "version": "1.0.0-beta.1",
     "author": {
         "name": "msg systems ag",
         "url": "https://github.com/msg-systems"
@@ -36,7 +36,8 @@
         "eonasdan-bootstrap-datetimepicker": "4.17.47",
         "bootstrap-datepicker":              "1.7.1",
         "bootstrap-timepicker":              "0.5.2",
-        "font-awesome":                      "4.7.0"
+        "font-awesome":                      "4.7.0",
+        "slickgrid":                         "msg-systems/slickgrid"
     },
     "devDependencies": {
         "load-grunt-tasks":         "3.5.2",
