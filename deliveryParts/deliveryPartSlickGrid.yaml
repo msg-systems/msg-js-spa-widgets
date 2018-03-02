@@ -82,7 +82,9 @@ register:
     JS:
     - ../node_modules/slickgrid/plugins/slick.headermenu.js
     CSS:
-    - ../node_modules/slickgrid/plugins/slick.headermenu.css
+    - name: ../node_modules/slickgrid/plugins/slick.headermenu.css
+      ASSETS:
+      - ../node_modules/slickgrid/images/down.gif
   uica.widget.slickGrid.plugin.rowmovemanager:
     JS:
     - ../node_modules/slickgrid/plugins/slick.rowmovemanager.js
